@@ -2,4 +2,43 @@
 
 'use strict';
 
+var fs = require('fs');
+var path = require('path');
+var config = require('../config/config');
+var dockeFileValidator = require('../');
+
+
+function usage(){
+   console.log('Usage: dockerfile_lint DOCKERFILE  [RULE_FILE]')
+}
+
+if (process.argv.length < 3){
+  usage();
+  process.exit(1);
+}
+
+
+var dockerfileLocation, rulefileLocation,dockerfile,rulefile;
+dockerfileLocation = process.argv[2];
+if (process.argv.length > 3) {
+  rulefileLocation = process.argv[3];
+} else {
+  rulefileLocation = config.DEFAULT_RULES;
+}
+
+try {
+  dockerfile = fs.readFileSync(dockerfileLocation, 'UTF-8');
+} catch (e) {
+  console.error('ERROR: Dockerfile not found');
+  process.exit(1);
+}
+try {
+  rulefile = fs.readFileSync(rulefileLocation, 'UTF-8');
+} catch (e) {
+  console.error('ERROR: Rule file not found');
+  process.exit(1);
+}
+var validateDockerfile = dockeFileValidator(rulefile);
+var result = JSON.stringify(validateDockerfile(dockerfile),undefined,2);
+console.log(result);
 process.exit(1);

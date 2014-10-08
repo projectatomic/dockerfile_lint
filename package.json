@@ -1,8 +1,11 @@
 {
   "name": "dockerfile_lint",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Utility for validating a docker file against accepted good practices",
   "main": "index.js",
+  "bin": {
+    "dockerfile_lint": "./bin/dockerfile_lint"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

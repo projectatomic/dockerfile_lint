@@ -4,20 +4,7 @@ var path = require('path');
 
 var yamlParser = require('js-yaml');
 
-var paramsRegexes = {
-  from: /^[a-z0-9.\/-]+(:[a-z0-9.]+)?$/,
-  maintainer: /.+/,
-  expose: /^[0-9]+([0-9\s]+)?$/,
-  env: /^[a-zA-Z_]+[a-zA-Z0-9_]* .+$/,
-  user: /^[a-z_][a-z0-9_]{0,30}$/,
-  run: /.+/,
-  cmd: /.+/,
-  onbuild: /.+/,
-  entrypoint: /.+/,
-  add: /^(~?[A-z0-9\/_.-]+|https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))\s~?[A-z0-9\/_.-]+$/,
-  volume: /^~?([A-z0-9\/_.-]+|\["[A-z0-9\/_.-]+"\])$/,
-  workdir: /^~?[A-z0-9\/_.-]+$/
-};
+
 
 function isDirValid(dir) {
   return path.normalize(dir).indexOf('..') !== 0;
@@ -34,18 +21,7 @@ var paramValidators = {
 }
 
 function finish(result) {
-
-  console.log("Result is "+ JSON.stringify(result, undefined, 2));
   return result;
-  // if (!result.error.data.length) {
-  //   return {
-  //     valid: true
-  //   };
-  // }
-  // return {
-  //   valid: false,
-  //   errors: errors
-  // };
 }
 
 function getRules(rulefile) {
@@ -77,7 +53,6 @@ function initLineRulesRegexes(ruleObj) {
     if (lineRules.hasOwnProperty(rule)) {
       lineRules[rule].paramSyntaxRegex = eval(lineRules[rule].paramSyntaxRegex);
       for (var semanticRule in lineRules[rule].rules) {
-          //console.log("setting rules semsntiv " + semanticRule + ": "+ JSON.stringify(lineRules[rule].rules[semanticRule], undefined, 2));
           lineRules[rule].rules[semanticRule].regex= eval(lineRules[rule].rules[semanticRule].regex);
       }
     }
