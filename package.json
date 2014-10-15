@@ -1,6 +1,6 @@
 {
   "name": "dockerfile_lint",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Utility for validating a docker file against accepted good practices",
   "main": "index.js",
   "bin": {

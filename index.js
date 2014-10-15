@@ -138,7 +138,8 @@ function validator(rulefile) {
     function addError(lineNumber, msg) {
       result.error.data.push({
         message: msg,
-        line: lineNumber
+        line: lineNumber,
+        level: 'error'
       });
       result.error.count++;
     };
