@@ -49,38 +49,41 @@ function createReqInstructionHash(ruleObj) {
 function initLineRulesRegexes(ruleObj) {
 
   var lineRules = ruleObj.line_rules;
+  if (!lineRules){
+    return;
+  } 
   for (var rule in lineRules) {
     if (lineRules.hasOwnProperty(rule)) {
       lineRules[rule].paramSyntaxRegex = eval(lineRules[rule].paramSyntaxRegex);
       for (var semanticRule in lineRules[rule].rules) {
-          lineRules[rule].rules[semanticRule].regex= eval(lineRules[rule].rules[semanticRule].regex);
+        lineRules[rule].rules[semanticRule].regex = eval(lineRules[rule].rules[semanticRule].regex);
       }
     }
   }
 }
 
-function checkRequiredInstructions(instructions, result){
-   for (var instruction in instructions ){
-     if (instructions.hasOwnProperty(instruction)){
-         if (!instructions[instruction].exists){
-            result[instructions[instruction].level].count++;
-            result[instructions[instruction].level].data.push(instructions[instruction]);
-         }
-     }
-   }
+function checkRequiredInstructions(instructions, result) {
+  for (var instruction in instructions) {
+    if (instructions.hasOwnProperty(instruction)) {
+      if (!instructions[instruction].exists) {
+        result[instructions[instruction].level].count++;
+        result[instructions[instruction].level].data.push(instructions[instruction]);
+      }
+    }
+  }
 }
 
-function checkLineRules(ruleObject, instruction,line, lineNumber,result){
+function checkLineRules(ruleObject, instruction, line, lineNumber, result) {
   var rules = ruleObject.line_rules[instruction].rules;
-  for (var index in rules){
-    if (rules.hasOwnProperty(index)){
-       var rule = rules[index];
-       if (rule.regex && rule.regex.test(line)){
-           result[rule.level].count++;
-           var ruleCopy = JSON.parse(JSON.stringify(rule));
-           ruleCopy.line = lineNumber;
-           result[rule.level].data.push(ruleCopy);
-       }
+  for (var index in rules) {
+    if (rules.hasOwnProperty(index)) {
+      var rule = rules[index];
+      if (rule.regex && rule.regex.test(line)) {
+        result[rule.level].count++;
+        var ruleCopy = JSON.parse(JSON.stringify(rule));
+        ruleCopy.line = lineNumber;
+        result[rule.level].data.push(ruleCopy);
+      }
     }
   }
 }
@@ -97,7 +100,11 @@ function validator(rulefile) {
   var ignoreRegex = eval(ruleObject.general.ignore_regex);
   initLineRulesRegexes(ruleObject);
 
-  return function validate(dockerfile) {
+  function getProfile() {
+      return ruleObject.profile;
+  };
+
+  function validate(dockerfile) {
     if (typeof dockerfile !== 'string') {
       //TODO clean this up
       return finish([{
@@ -126,11 +133,18 @@ function validator(rulefile) {
       },
       summary: []
     }
-
     var linesArr = dockerfile.split(/\r?\n/);
 
+    function addError(lineNumber, msg) {
+      result.error.data.push({
+        message: msg,
+        line: lineNumber
+      });
+      result.error.count++;
+    };
+
     function isPartialLine(line) {
-      return (continuationRegex.exec(line) !== null);
+      return (continuationRegex.test(line));
     };
 
     function validateLine(line) {
@@ -145,60 +159,42 @@ function validator(rulefile) {
         linesArr[currentLine + lineOffSet] = undefined;
         lineOffSet++;
       }
-
       // First instruction must be FROM
       if (!fromCheck) {
         fromCheck = true;
         if (line.toUpperCase().indexOf('FROM') !== 0) {
-          result.error.data.push({
-            message: 'Missing or misplaced FROM',
-            line: currentLine
-          });
-          result.error.count++;
+          addError(currentLine,'Missing or misplaced FROM' );
         }
       }
       var instruction = validInstructionsRegex.exec(line);
       if (!instruction) {
-        result.error.data.push({
-          message: 'Invalid instruction',
-          line: currentLine
-        });
-        result.error.count++;
+        addError(currentLine,'Invalid instruction');
         return false;
       }
       instruction = instruction[0].trim().toUpperCase();
       if (instruction in requiredInstructions) {
         requiredInstructions[instruction].exists = true;
       }
-      checkLineRules(ruleObject,instruction, line, currentLine, result);
-
+      checkLineRules(ruleObject, instruction, line, currentLine, result);
       var params = line.replace(validInstructionsRegex, '');
-      var validParams = ruleObject.line_rules[instruction].paramSyntaxRegex.test(params) ;
+      var validParams = ruleObject.line_rules[instruction].paramSyntaxRegex.test(params);
       //&& (paramValidators[instruction] ? paramValidators[instruction](params) : true);
       if (!validParams) {
-        result.error.data.push({
-          message: 'Bad parameters',
-          line: currentLine
-        });
-        result.error.count++;
+        addError(currentLine,'Bad Parameters');
         return false;
       }
-      
       return true;
     }
-
     linesArr.forEach(validateLine);
-    checkRequiredInstructions(requiredInstructions,result);
-
-    if (!fromCheck) {
-      result.error.data.push({
-        message: 'Missing or misplaced FROM',
-        line: 1
-      });
-    }
-
+    checkRequiredInstructions(requiredInstructions, result);
     return finish(result);
+  };
+
+  return {
+     getProfile:  getProfile,
+     validate : validate
   }
+
 }
 
 module.exports = validator;

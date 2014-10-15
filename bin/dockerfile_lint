@@ -38,7 +38,8 @@ try {
   console.error('ERROR: Rule file not found');
   process.exit(1);
 }
-var validateDockerfile = dockeFileValidator(rulefile);
-var result = JSON.stringify(validateDockerfile(dockerfile),undefined,2);
+var validator = dockeFileValidator(rulefile);
+var result = JSON.stringify(validator.validate(dockerfile),undefined,2);
+console.log('Profile used is ' + validator.getProfile().name);
 console.log(result);
 process.exit(1);
