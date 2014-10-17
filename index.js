@@ -74,6 +74,10 @@ function checkRequiredInstructions(instructions, result) {
 }
 
 function checkLineRules(ruleObject, instruction, line, lineNumber, result) {
+  if (!ruleObject.line_rules[instruction]) {
+    console.log("No Line Rules for instruction :" + instruction);
+    return;
+  }
   var rules = ruleObject.line_rules[instruction].rules;
   for (var index in rules) {
     if (rules.hasOwnProperty(index)) {
@@ -183,11 +187,13 @@ function validator(rulefile) {
       }
       checkLineRules(ruleObject, instruction, line, currentLine, result);
       var params = line.replace(validInstructionsRegex, '');
-      var validParams = ruleObject.line_rules[instruction].paramSyntaxRegex.test(params);
-      //&& (paramValidators[instruction] ? paramValidators[instruction](params) : true);
-      if (!validParams) {
-        addError(currentLine, 'Bad Parameters');
-        return false;
+      if (ruleObject.line_rules[instruction] && ruleObject.line_rules[instruction].paramSyntaxRegex) {
+        var validParams = ruleObject.line_rules[instruction].paramSyntaxRegex.test(params);
+        //&& (paramValidators[instruction] ? paramValidators[instruction](params) : true);
+        if (!validParams) {
+          addError(currentLine, 'Bad Parameters');
+          return false;
+        }
       }
       return true;
     }
