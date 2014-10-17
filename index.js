@@ -49,9 +49,9 @@ function createReqInstructionHash(ruleObj) {
 function initLineRulesRegexes(ruleObj) {
 
   var lineRules = ruleObj.line_rules;
-  if (!lineRules){
+  if (!lineRules) {
     return;
-  } 
+  }
   for (var rule in lineRules) {
     if (lineRules.hasOwnProperty(rule)) {
       lineRules[rule].paramSyntaxRegex = eval(lineRules[rule].paramSyntaxRegex);
@@ -78,7 +78,12 @@ function checkLineRules(ruleObject, instruction, line, lineNumber, result) {
   for (var index in rules) {
     if (rules.hasOwnProperty(index)) {
       var rule = rules[index];
-      if (rule.regex && rule.regex.test(line)) {
+      if (rule.regex && rule.regex.test(line) && !rule.inverse_rule) {
+        result[rule.level].count++;
+        var ruleCopy = JSON.parse(JSON.stringify(rule));
+        ruleCopy.line = lineNumber;
+        result[rule.level].data.push(ruleCopy);
+      } else if (rule.regex && !rule.regex.test(line) && rule.inverse_rule) {
         result[rule.level].count++;
         var ruleCopy = JSON.parse(JSON.stringify(rule));
         ruleCopy.line = lineNumber;
@@ -101,7 +106,7 @@ function validator(rulefile) {
   initLineRulesRegexes(ruleObject);
 
   function getProfile() {
-      return ruleObject.profile;
+    return ruleObject.profile;
   };
 
   function validate(dockerfile) {
@@ -164,12 +169,12 @@ function validator(rulefile) {
       if (!fromCheck) {
         fromCheck = true;
         if (line.toUpperCase().indexOf('FROM') !== 0) {
-          addError(currentLine,'Missing or misplaced FROM' );
+          addError(currentLine, 'Missing or misplaced FROM');
         }
       }
       var instruction = validInstructionsRegex.exec(line);
       if (!instruction) {
-        addError(currentLine,'Invalid instruction');
+        addError(currentLine, 'Invalid instruction');
         return false;
       }
       instruction = instruction[0].trim().toUpperCase();
@@ -181,7 +186,7 @@ function validator(rulefile) {
       var validParams = ruleObject.line_rules[instruction].paramSyntaxRegex.test(params);
       //&& (paramValidators[instruction] ? paramValidators[instruction](params) : true);
       if (!validParams) {
-        addError(currentLine,'Bad Parameters');
+        addError(currentLine, 'Bad Parameters');
         return false;
       }
       return true;
@@ -192,8 +197,8 @@ function validator(rulefile) {
   };
 
   return {
-     getProfile:  getProfile,
-     validate : validate
+    getProfile: getProfile,
+    validate: validate
   }
 
 }
