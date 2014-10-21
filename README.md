@@ -22,15 +22,33 @@ This section contains rules that must be run on a given instruction in the docke
 ##Required Instruction Section
 This section includes a list of instructions that must exist in the dockerfile in order for it to be considered valid.
 
-#Library Usage Example
+#Library Usage
 
+##Node.js application use
 
+Install from github from your application root directory:
+```
+npm install git+https://github.com/redhataccess/dockerfile_lint
+```
+
+Import and use the validator:
 ```js
 var fs = require('fs');
 var rulefile = fs.readFileSync('/path/to/rulefile', 'utf8');
 var DockerFileValidator = require('dockerfile_lint');
 var validator = new DockeFileValidator(rulefile);
 var result = validator.validate(dockerfile);
+```
+
+## Command Line use
+You can install the linter globally on your pc:
+```
+sudo npm install git+https://github.com/redhataccess/dockerfile_lint
+
+```
+Run the tool:
+```
+dockerfile_lint  /path/to/dockerfile  [/path/to/rule/file]
 ```
 
 
