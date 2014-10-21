@@ -5,7 +5,7 @@
 var fs = require('fs');
 var path = require('path');
 var config = require('../config/config');
-var dockeFileValidator = require('../');
+var DockeFileValidator = require('../');
 
 
 function usage(){
@@ -38,7 +38,7 @@ try {
   console.error('ERROR: Rule file not found');
   process.exit(1);
 }
-var validator = dockeFileValidator(rulefile);
+var validator = new DockeFileValidator(rulefile);
 var result = JSON.stringify(validator.validate(dockerfile),undefined,2);
 console.log('Profile used is ' + validator.getProfile().name);
 console.log(result);

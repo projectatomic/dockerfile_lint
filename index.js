@@ -98,8 +98,10 @@ function checkLineRules(ruleObject, instruction, line, lineNumber, result) {
 }
 
 
-
-function validator(rulefile) {
+/**
+ *  Constructor Function for the validator.
+ */
+function Validator(rulefile) {
   /**
    * Static rules /Regex can be reused
    */
@@ -209,4 +211,4 @@ function validator(rulefile) {
 
 }
 
-module.exports = validator;
+module.exports = Validator;
