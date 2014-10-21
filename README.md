@@ -11,13 +11,53 @@ The rule file has 4 sections, a profile section, a general section, a line rule 
 
 ##Profile Section
 The profile section gives information about the rule file
-The information here is meant to help a user select a rule file that is appropriate for a given dockerfile.
+The information here is meant to help a user select a rule file that is appropriate for a given dockerfile. Example:
+```yaml
+profile:
+  name: "Default"
+  description: "Default Profile. Checks basic syntax."
+```
 
 ##General Section
 This section contains general syntax rules.
 
 ##Line Rule Section
-This section contains rules that must be run on a given instruction in the dockerfile. There is a rule to check the syntax of each instruction and a zero or more rules for semantic checks. 
+This section contains rules that must be run on a given instruction in the dockerfile. There is a rule to check the syntax of each instruction and zero or more rules for semantic checks. The example below shows rules to run against the 'FROM' instruction:
+```yaml
+line_rules: 
+    FROM: 
+      paramSyntaxRegex: /.+/
+      rules: 
+        - 
+          label: "is_latest_tag"
+          regex: /latest/
+          level: "info"
+          message: "base image uses 'latest' tag"
+          description: "using the 'latest' tag may cause unpredictable builds. It is recommended that a specific tag is used in the FROM line."
+          reference_url: 
+            - "https://docs.docker.com/reference/builder/"
+            - "#from"
+        - 
+          label: "no_tag"
+          regex: /[:]/
+          level: "warn"
+          inverse_rule: true
+          message: "No tag is used"
+          description: "No tag is used"
+          reference_url: 
+            - "https://docs.docker.com/reference/builder/"
+            - "#from"
+        - 
+          label: "from_not_redhat"
+          regex: /rhel|redhat*/
+          inverse_rule: true
+          level: "error"
+          message: "Base Image is not from Red Hat"
+          description: "Base Image must be from Red Hat"
+          reference_url: 
+```
+Note the (optional) 'inverse_rule' attribute - this is just a convinient way to negate a regex rule - by default a rule is considered violated if it matches the regex pattern, but when 'inverse_rule' is set to 'true' the rule is violated if the line does not match the regex.
+
 
 ##Required Instruction Section
 This section includes a list of instructions that must exist in the dockerfile in order for it to be considered valid.
@@ -63,5 +103,5 @@ dockerfile_lint  /path/to/dockerfile  [/path/to/rule/file]
 #Credits
 The linter is based on https://github.com/Runnable/validate-dockerfile and https://github.com/goern/dockerfile_checker
 
-# license
+# License
 MIT
