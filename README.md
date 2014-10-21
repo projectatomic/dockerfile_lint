@@ -10,25 +10,20 @@ The rules are implememented using regular expressions, run on one instruction of
 The rule file has 4 sections, a profile section, a general section, a line rule section and a required instruction section.
 
 ##Profile Section
-The profile section is gives information about the rule file, for example:
-```yaml
-profile:
-    name: "Default"
-    description: "Default Profile. Checks basic syntax."
-```
+The profile section gives information about the rule file
 The information here is meant to help a user select a rule file that is appropriate for a given dockerfile.
 
 ##General Section
+This section contains general syntax rules.
 
 ##Line Rule Section
-
+This section contains rules that must be run on a given instruction in the dockerfile. There is a rule to check the syntax of each instruction and a zero or more rules for semantic checks. 
 
 ##Required Instruction Section
-
+This section includes a list of instructions that must exist in the dockerfile in order for it to be considered valid.
 
 #Library Usage Example
 
-Installation:
 
 ```js
 var fs = require('fs');
@@ -38,14 +33,6 @@ var validator = new DockeFileValidator(rulefile);
 var result = validator.validate(dockerfile);
 ```
 
-#Command Line Use
-
-The validator can also be used as a command line tool.
-
-Install:
-```
-npm install
-```
 
 #Credits
 The linter is based on https://github.com/Runnable/validate-dockerfile and https://github.com/goern/dockerfile_checker
