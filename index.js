@@ -1,8 +1,15 @@
 'use strict';
 
 var path = require('path');
+var fs = require('fs');
 
 var yamlParser = require('js-yaml');
+
+var util = require('util');
+
+var config = require('./config/config');
+
+var extend = require('extend');
 
 
 
@@ -27,9 +34,20 @@ function finish(result) {
 function getRules(rulefile) {
   //TODO throw exceptions if invalid file!
   try {
-    var doc = yamlParser.safeLoad(rulefile);
+    //First get the base rules
+    var baseRuleLocation = fs.readFileSync(config.BASE_RULES, 'UTF-8');
+    var baseRules = yamlParser.safeLoad(baseRuleLocation);
+    //console.log(JSON.stringify(baseRules,null,2));
+  } catch (e){
+     console.log("Error reading base rules " + e);
+     return null;
+  }
+  try {
+    var rules = yamlParser.safeLoad(rulefile);
+    var combinedRules = extend(true, baseRules, rules);
     //console.log(doc);
-    return doc;
+     console.log(JSON.stringify(combinedRules,null,2));
+    return combinedRules;
   } catch (e) {
     console.log(e);
     return null;
@@ -97,16 +115,31 @@ function checkLineRules(ruleObject, instruction, line, lineNumber, result) {
   }
 }
 
+function createValidCommandRegex(commandList) {
+  if (util.isArray(commandList)) {
+    var regexStr = '\^\(';
+    var commands = commandList.join('\|');
+    regexStr = regexStr + commands;
+    regexStr = regexStr + '\)\(\\\s\)\+';
+    return new RegExp(regexStr, 'i');
+  } else {
+    console.log("Invalid Paremeter for command regex");
+    return null;
+  }
+}
+
 
 /**
  *  Constructor Function for the validator.
  */
 function Validator(rulefile) {
-  /**
-   * Static rules /Regex can be reused
-   */
+  if (!rulefile) {
+    //TODO Fix me!
+
+  };
   var ruleObject = getRules(rulefile);
-  var validInstructionsRegex = eval(ruleObject.general.valid_instruction_regex);
+  //var validInstructionsRegex = eval(ruleObject.general.valid_instruction_regex);
+  var validInstructionsRegex = createValidCommandRegex(ruleObject.general.valid_instructions);
   var continuationRegex = eval(ruleObject.general.multiline_regex);
   var ignoreRegex = eval(ruleObject.general.ignore_regex);
   initLineRulesRegexes(ruleObject);
@@ -127,7 +160,6 @@ function Validator(rulefile) {
     var requiredInstructions = createReqInstructionHash(ruleObject);
 
     var fromCheck = false;
-    var hasCmd = false;
     var currentLine = 0;
     var result = {
       error: {

@@ -1,7 +1,7 @@
 {
   "name": "dockerfile_lint",
-  "version": "0.0.6",
-  "description": "Utility for validating a docker file against accepted good practices",
+  "version": "0.0.7",
+  "description": "Utility for linting a docker file against accepted good practices",
   "main": "index.js",
   "bin": {
     "dockerfile_lint": "./bin/dockerfile_lint"
@@ -25,6 +25,7 @@
     "url": "https://github.com/redhataccess/dockerfile_lint/issues"
   },
   "dependencies": {
-    "js-yaml": "~3.2.2"
+    "js-yaml": "~3.2.2",
+    "extend": "~2.0.0"
   }
 }

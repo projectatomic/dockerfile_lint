@@ -1,0 +1,66 @@
+---
+  profile:
+    name: "Default"
+    description: "Default Profile. Checks basic syntax."
+  general: 
+    ref_url_base: "https://docs.docker.com/reference/builder/"
+    valid_instructions: 
+      - "FROM"
+      - "MAINTAINER"
+      - "RUN"
+      - "CMD"
+      - "EXPOSE"
+      - "ENV"
+      - "ADD"
+      - "COPY"
+      - "ENTRYPOINT"
+      - "VOLUME"
+      - "USER"
+      - "WORKDIR"
+      - "ONBUILD"
+    ignore_regex: /^#/
+    multiline_regex: /\\$/
+  line_rules: 
+    FROM: 
+      paramSyntaxRegex: /.+/
+      rules: []
+    MAINTAINER: 
+      paramSyntaxRegex: /.+/
+      rules: []
+    RUN: 
+      paramSyntaxRegex: /.+/
+      rules: []
+    CMD: 
+      paramSyntaxRegex: /.+/
+      rules: []
+    EXPOSE: 
+      paramSyntaxRegex: /.+/
+      rules: []
+    ENV: 
+      paramSyntaxRegex: /.+/
+      rules: []
+    ADD: 
+      paramSyntaxRegex: /.+/
+    COPY: 
+      paramSyntaxRegex: /.+/
+      rules: []
+    ENTRYPOINT: 
+      paramSyntaxRegex: /.+/
+      rules: []
+    VOLUME: 
+      paramSyntaxRegex: /.+/
+      rules: []
+    USER: 
+      paramSyntaxRegex: /.+/
+      rules: []
+    WORKDIR: 
+      paramSyntaxRegex: /.+/
+      rules: []
+    ONBUILD: 
+      paramSyntaxRegex: /.+/
+      rules: []
+  required_instructions: []
+
+  discouraged_instructions: []
+
+  mutually_exclusive_instructions: []

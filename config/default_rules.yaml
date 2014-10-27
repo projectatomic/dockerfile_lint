@@ -2,26 +2,6 @@
   profile:
     name: "Default"
     description: "Default Profile. Checks basic syntax."
-  general: 
-    ref_url_base: "https://docs.docker.com/reference/builder/"
-    valid_instructions: 
-      - "FROM"
-      - "MAINTAINER"
-      - "RUN"
-      - "CMD"
-      - "EXPOSE"
-      - "ENV"
-      - "ADD"
-      - "COPY"
-      - "ENTRYPOINT"
-      - "VOLUME"
-      - "USER"
-      - "WORKDIR"
-      - "ONBUILD"
-    instruction_regex: /(\\w+)\\s(.+$)/
-    valid_instruction_regex: /^(CMD|FROM|MAINTAINER|RUN|EXPOSE|ENV|ADD|COPY|ENTRYPOINT|VOLUME|USER|WORKDIR|ONBUILD)(\s)?/i
-    ignore_regex: /^#/
-    multiline_regex: /\\$/
   line_rules: 
     FROM: 
       paramSyntaxRegex: /^[a-z0-9./-]+(:[a-z0-9.]+)?$/
@@ -64,9 +44,6 @@
           message: "installing SSH in a container is not recommended"
           description: "Do you really need SSH in this image?"
           reference_url: "https://github.com/jpetazzo/nsenter"
-    CMD: 
-      paramSyntaxRegex: /.+/
-      rules: []
     EXPOSE: 
       paramSyntaxRegex: /^[0-9]+([0-9\s]+)?$/
       rules: []

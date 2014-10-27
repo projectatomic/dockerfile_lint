@@ -21,6 +21,19 @@ profile:
 ##General Section
 This section contains general syntax rules.
 
+##Rule Attributes
+
+Here is an example of a line rule expressed in yaml:
+```yaml
+    label: "is_latest_tag"
+    regex: /latest/
+    level: "info"
+    inverse_rule: true
+    message: "base image uses 'latest' tag"
+    description: "using the 'latest' tag may cause unpredictable builds. It is recommended that a specific tag is used in the FROM line."
+    reference_url: 
+```
+
 ##Line Rule Section
 This section contains rules that must be run on a given instruction in the dockerfile. There is a rule to check the syntax of each instruction and zero or more rules for semantic checks. The example below shows rules to run against the 'FROM' instruction:
 ```yaml

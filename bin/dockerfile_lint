@@ -8,17 +8,21 @@ var config = require('../config/config');
 var DockeFileValidator = require('../');
 
 
-function usage(){
-   console.log('Usage: dockerfile_lint DOCKERFILE  [RULE_FILE]')
+function usage() {
+  console.log('Usage: dockerfile_lint DOCKERFILE  [RULE_FILE]')
 }
 
-if (process.argv.length < 3){
+if (process.argv.length < 3) {
   usage();
   process.exit(1);
 }
 
 
-var dockerfileLocation, rulefileLocation,dockerfile,rulefile;
+var dockerfileLocation = null;
+var rulefileLocation = null;
+var dockerfile = null;
+var rulefile = null;
+
 dockerfileLocation = process.argv[2];
 if (process.argv.length > 3) {
   rulefileLocation = process.argv[3];
@@ -32,14 +36,17 @@ try {
   console.error('ERROR: Dockerfile not found');
   process.exit(1);
 }
-try {
-  rulefile = fs.readFileSync(rulefileLocation, 'UTF-8');
-} catch (e) {
-  console.error('ERROR: Rule file not found');
-  process.exit(1);
+if (rulefileLocation !== null) {
+  try {
+    rulefile = fs.readFileSync(rulefileLocation, 'UTF-8');
+  } catch (e) {
+    console.error('ERROR: Rule file not found');
+    process.exit(1);
+  }
 }
+
 var validator = new DockeFileValidator(rulefile);
-var result = JSON.stringify(validator.validate(dockerfile),undefined,2);
+var result = JSON.stringify(validator.validate(dockerfile), undefined, 2);
 console.log('Profile used is ' + validator.getProfile().name);
-console.log(result);
+console.log(JSON.parse(result));
 process.exit(1);
