@@ -101,7 +101,7 @@ sudo npm install git+https://github.com/redhataccess/dockerfile_lint
 ```
 Run the tool:
 ```
-dockerfile_lint  /path/to/dockerfile  [/path/to/rule/file]
+dockerfile_lint  -f /path/to/dockerfile  [-r /path/to/rule/file]
 ```
 A default rule file is used if no rule file is given.
 
@@ -110,7 +110,17 @@ You can also run the tool without installing it - just clone the source reposito
 git clone git@github.com:redhataccess/dockerfile_lint.git
 cd dockerfile_lint/bin
 chmod 555 dockerfile_lint
-dockerfile_lint  /path/to/dockerfile  [/path/to/rule/file]
+dockerfile_lint  -f /path/to/dockerfile  [ -r /path/to/rule/file]
+```
+
+To display results as JSON use the '-j' option:
+```
+dockerfile_lint  -j -f /path/to/dockerfile  [ -r /path/to/rule/file]
+```
+
+Command Help:
+```
+dockerfile_lint  -h
 ```
 
 #Credits

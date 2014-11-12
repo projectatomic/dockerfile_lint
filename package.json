@@ -7,7 +7,7 @@
     "dockerfile_lint": "./bin/dockerfile_lint"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,11 @@
   },
   "dependencies": {
     "js-yaml": "~3.2.2",
-    "extend": "~2.0.0"
+    "extend": "~2.0.0",
+    "commander": "~2.5.0"
+  },
+  "devDependencies": {
+    "should": "~4.1.0",
+    "mocha": "~2.0.1"
   }
 }

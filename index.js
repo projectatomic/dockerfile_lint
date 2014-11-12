@@ -38,19 +38,23 @@ function getRules(rulefile) {
     var baseRuleLocation = fs.readFileSync(config.BASE_RULES, 'UTF-8');
     var baseRules = yamlParser.safeLoad(baseRuleLocation);
     //console.log(JSON.stringify(baseRules,null,2));
-  } catch (e){
-     console.log("Error reading base rules " + e);
-     return null;
-  }
-  try {
-    var rules = yamlParser.safeLoad(rulefile);
-    var combinedRules = extend(true, baseRules, rules);
-    //console.log(doc);
-     console.log(JSON.stringify(combinedRules,null,2));
-    return combinedRules;
   } catch (e) {
-    console.log(e);
+    console.log("Error reading base rules " + e);
     return null;
+  }
+  if (!rulefile) {
+    return baseRules;
+  } else {
+    try {
+      var rules = yamlParser.safeLoad(rulefile);
+      var combinedRules = extend(true, baseRules, rules);
+      //console.log(doc);
+      //console.log(JSON.stringify(combinedRules,null,2));
+      return combinedRules;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
   }
 }
 
