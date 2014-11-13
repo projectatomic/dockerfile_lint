@@ -107,11 +107,13 @@ function checkLineRules(ruleObject, instruction, line, lineNumber, result) {
       if (rule.regex && rule.regex.test(line) && !rule.inverse_rule) {
         result[rule.level].count++;
         var ruleCopy = JSON.parse(JSON.stringify(rule));
+        ruleCopy.lineContent = line; 
         ruleCopy.line = lineNumber;
         result[rule.level].data.push(ruleCopy);
       } else if (rule.regex && !rule.regex.test(line) && rule.inverse_rule) {
         result[rule.level].count++;
         var ruleCopy = JSON.parse(JSON.stringify(rule));
+        ruleCopy.lineContent = line; 
         ruleCopy.line = lineNumber;
         result[rule.level].data.push(ruleCopy);
       }
@@ -181,12 +183,13 @@ function Validator(rulefile) {
       summary: []
     }
     var linesArr = dockerfile.split(/\r?\n/);
-
+    
     function addError(lineNumber, msg) {
       result.error.data.push({
         message: msg,
         line: lineNumber,
-        level: 'error'
+        level: 'error',
+        lineContent : linesArr[lineNumber-1]
       });
       result.error.count++;
     };

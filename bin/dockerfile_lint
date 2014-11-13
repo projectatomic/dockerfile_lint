@@ -27,9 +27,15 @@ function getRefUrl(url){
 
 function printEntry(entry, level){
   var ref_url = getRefUrl(entry.reference_url);
-  var line = entry.line? "Line " + entry.line + ". " + level + ": ": level + ": ";
-  console.log(line + entry.message + ". " + entry.description + ". " +
+  var line = entry.line? ("Line " + entry.line +":") : "Line 0:"
+  if (entry.lineContent){
+    console.log(line + " -> " + entry.lineContent);
+  }
+  var message = entry.message ? entry.message : " ";
+  var description = entry.description ? (". " + entry.description + ". ") : ". ";
+  console.log(level + ": " +message + description +
     "Reference -> " + ref_url);
+  console.log("\n");
 
 }
 
