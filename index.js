@@ -206,8 +206,15 @@ function Validator(rulefile) {
       }
       while (isPartialLine(line)) {
         line = line.replace(continuationRegex, " ");
-        line = line + linesArr[currentLine + lineOffSet];
-        linesArr[currentLine + lineOffSet] = undefined;
+        // we can comment inside commands
+        if (linesArr[currentLine + lineOffSet][0] === '#'){
+          linesArr[currentLine + lineOffSet] = undefined;
+          // very hacky and bad
+          line = line + "\\";
+        } else {
+          line = line + linesArr[currentLine + lineOffSet];
+          linesArr[currentLine + lineOffSet] = undefined;
+        }
         lineOffSet++;
       }
       // First instruction must be FROM
