@@ -81,7 +81,7 @@ This section includes a list of instructions that must exist in the dockerfile i
 
 Install from github from your application root directory:
 ```
-npm install git+https://github.com/redhataccess/dockerfile_lint
+npm install git+https://github.com/projectatomic/dockerfile_lint
 ```
 
 Import and use the validator:
@@ -96,7 +96,7 @@ var result = validator.validate(dockerfile);
 ## Command Line use
 You can install the linter globally on your pc:
 ```
-sudo npm install git+https://github.com/redhataccess/dockerfile_lint
+sudo npm install git+https://github.com/projectatomic/dockerfile_lint
 
 ```
 Run the tool:
@@ -107,7 +107,7 @@ A default rule file is used if no rule file is given.
 
 You can also run the tool without installing it - just clone the source repository and run the tool from the bin directory :
 ```
-git clone git@github.com:redhataccess/dockerfile_lint.git
+git clone git@github.com:projectatomic/dockerfile_lint.git
 cd dockerfile_lint/bin
 chmod 555 dockerfile_lint
 dockerfile_lint  -f /path/to/dockerfile  [ -r /path/to/rule/file]
