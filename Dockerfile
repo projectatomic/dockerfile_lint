@@ -30,6 +30,6 @@ RUN npm install git+https://github.com/projectatomic/dockerfile_lint && \
 #    ln -s /opt/node_modules/dockerfile_lint/bin/dockerfile_lint /usr/bin/dockerfile_lint
 
 WORKDIR /root/
-LABEL RUN docker run -it --rm --privileged -v `pwd`:/root/ --name NAME -e NAME=NAME -e IMAGE=IMAGE IMAGE
+LABEL RUN docker run -it --rm --privileged -v `pwd`:/root/ --name NAME -e NAME=NAME -e IMAGE=IMAGE IMAGE dockerfile_lint -f Dockerfile
 
 CMD /bin/bash
