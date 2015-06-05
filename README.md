@@ -3,8 +3,21 @@
 
 A rule based 'linter' for [Dockerfiles](https://docs.docker.com/reference/builder/). The linter rules can be used  to check file syntax as well as arbitrary semantic and best practice attributes determined by the rule file writer.
 
+#Quickstart
 
-#Rule Files
+1. Change to directory where you have a Dockerfile
+1. run
+  * Atomic CLI
+
+            atomic run projectatomic/dockerfile-lint
+
+  * Docker CLI
+
+            docker run -it --rm --privileged -v `pwd`:/root/ \
+                   projectatomic/dockerfile-lint \
+                   dockerfile_lint -f Dockerfile
+
+#Extending and Customizing: Rule Files
 Rule files are written in [yaml](http://www.yaml.org/). See the example rule file **sample_rules.yaml** in the root folder of the project.
 The rules are implememented using regular expressions, run on one instruction of the dockerfile at a time.
 The rule file has 4 sections, a profile section, a general section, a line rule section and a required instruction section.
