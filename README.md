@@ -109,7 +109,7 @@ var result = validator.validate(dockerfile);
 ## Command Line use
 You can install the linter globally on your pc:
 ```
-sudo npm install git+https://github.com/projectatomic/dockerfile_lint
+sudo npm install -g dockerfile_lint
 
 ```
 Run the tool:
