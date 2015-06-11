@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:redhataccess/dockerfile_lint.git"
+    "url": "git@github.com:projectatomic/dockerfile_lint.git"
   },
   "keywords": [
     "dockerfile",
@@ -22,7 +22,7 @@
   "author": "Lindani Phiri",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/redhataccess/dockerfile_lint/issues"
+    "url": "https://github.com/projectatomic/dockerfile_lint/issues"
   },
   "dependencies": {
     "js-yaml": "~3.2.2",
