@@ -9,6 +9,7 @@
       - "MAINTAINER"
       - "RUN"
       - "CMD"
+      - "LABEL"
       - "EXPOSE"
       - "ENV"
       - "ADD"
@@ -31,6 +32,9 @@
       paramSyntaxRegex: /.+/
       rules: []
     CMD: 
+      paramSyntaxRegex: /.+/
+      rules: []
+    LABEL: 
       paramSyntaxRegex: /.+/
       rules: []
     EXPOSE: 
