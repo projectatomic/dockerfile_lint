@@ -109,7 +109,7 @@ var remoteFile = false;
 
 commandline.option('-j, --json', 'Show results in JSON format')
   .option('-r, --rulefile [rulefile] (optional)', 'Rule file',rulefile)
-  .option('-f, --dockerfile [dockerfile] (required)', 'File to lint',dockerfile)
+  .option('-f, --dockerfile [dockerfile] (required)', 'File to lint. Accepts a local file or an http(s) URL',dockerfile)
   .parse(process.argv);
 
 
