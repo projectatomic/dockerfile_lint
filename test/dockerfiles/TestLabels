@@ -29,4 +29,4 @@ CMD ["nginx"]
 EXPOSE 80
 EXPOSE 443
 
-LABEL VendorID=Red Hat
+LABEL "VendorID"=12345 Authoritative_Registry="registry.redhat.com"  custom="customLabel" BZComponent="1234"

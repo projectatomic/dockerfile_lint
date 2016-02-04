@@ -71,12 +71,16 @@ function parseLabels(labels) {
     return null;
   }
   labels = labels.replace(/"/g, '');
+  labels = labels.replace(/'/g, '');
   var x = labels.match(re);
+  console.log("labels are " +x)
   var obj = {};
   for (var i = 0; i < x.length; i++) {
     var split = x[i].split('=');
+    console.log("label key is " + split[0] )
     obj[split[0].trim()] = split[1].trim();
   }
+  console.log("Parsed labels are " + printObject(obj))
   return obj;
 }
 
@@ -200,11 +204,11 @@ function findLabelRule(key, rules) {
   }
   for (var i = 0; i < rules.length; i++) {
     var keys = Object.keys(rules[i]);
+    console.log("keys to match")
     console.log("Looking for match " + key)
-    for (var y = 0; y < keys.length; y++) {
-      if (rules[i].hasOwnProperty(keys[y])) {
-        console.log("Found match")
-        printObject(rules[i])
+    for (var j = 0; j < keys.length; j++) {
+      if (rules[i].hasOwnProperty(key)) {
+        console.log("Found match :" +   printObject(rules[i]))
         return rules[i];
       }
     }
@@ -333,23 +337,27 @@ function Validator(rulefile) {
           return false;
         }
         var labelKeys = Object.keys(labels);
+        console.log("label keys are "+labelKeys)
         if (ruleObject.line_rules[instruction].defined_label_rules && ruleObject.line_rules[instruction].defined_label_rules.length > 0) {
           for (var i = 0; i < labelKeys.length; i++) {
             //console.log("Checking label key " + labelKeys[i])
             var labelRuleMatch = findLabelRule(labelKeys[i],ruleObject.line_rules[instruction].defined_label_rules);
-            //console.log("Matched rule " + printObject(labelRuleMatch))
+            console.log("Matched rule " + printObject(labelRuleMatch))
             if (labelRuleMatch) {
               var label_rule = labelRuleMatch[labelKeys[i]]
+              console.log("Label rule for "+ labelKeys[i] + " is "+ label_rule)
               if (label_rule.required) {
                 console.log("Label is required for " + labelKeys[i])
                 requiredLabels[labelKeys[i]].exists = true;
               }
               if (label_rule.valueRegex && !eval(label_rule.valueRegex).exec(labels[labelKeys[i]])) {
+                console.log("evaluating label "+ labels[labelKeys[i]])
                 addError(result, currentLine, linesArr, label_rule.message ? label_rule.message : 'Value for label ' + labelKeys[i] + ' is not in required format');
                 return false;
               } else if (ruleObject.line_rules[instruction].defined_label_rules.default_label_rules) {
                 default_rules = ruleObject.line_rules[instruction].defined_label_rules.default_label_rules;
                 var failed = false;
+                
                 if (default_rules.keyRegex && !eval(default_rules.keyRegex).exec(labelKeys[i])) {
                   addError(result, currentLine, linesArr, default_rules.key_error_message ? default_rules.key_error_message : 'Key for label ' + labelKeys[i] + ' is not in required format');
                   failed = true;
