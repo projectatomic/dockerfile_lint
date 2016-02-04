@@ -1,0 +1,78 @@
+---
+  profile:
+    name: "Label"
+    description: "Label checking rule file."
+
+  line_rules:
+    LABEL:
+       paramSyntaxRegex: /.+/
+       # Use defined_label_rules to defined a set of labels for your dockerfile
+       # In this example, the labels "Vendor","Authoritative_Registry","BZComponent"
+       # have been defined. A label value is 'valid' if matches the regular
+       # expression 'valueRegex', otherwise an error is logged with the string "message"
+       # at level 'level'.  'reference_url' provides a web link where the user can
+       # get more information about the rule.
+       #
+       defined_label_rules:
+         -
+           VendorID:
+             valueRegex: /^\d+$/
+             message: "Label 'Vendor ID' is has invalid format"
+             level: "error"
+             required: true
+             reference_url:
+               - "https://docs.docker.com/reference/builder/"
+               - "#from"
+         -
+           Authoritative_Registry:
+             valueRegex: /.+/
+             message: "Label 'Authoritative_Registry' has invalid format"
+             level: "error"
+             required: true
+             reference_url:
+               - "https://docs.docker.com/reference/builder/"
+               - "#from"
+         -
+           BZComponent:
+            valueRegex: /^\d+$/
+            message: "Label 'BZComponent' has invalid format"
+            level: "error"
+            required: false
+            reference_url:
+              - "https://docs.docker.com/reference/builder/"
+              - "#from"
+        #
+        # Generic labels format checking, used on any labels keys not
+        # defined in the 'defined_label_rules' list
+        # The keyRegex is run against the label key and
+        # and the valueRegex is run against the label value. The regex must
+        # match for the key/value to be considered valid.
+        #
+       default_label_rules:
+           keyRegex:  /.+/
+           key_error_message: "The key of the label has the wrong format"
+           valueRegex:  /.+/
+           value_error_message: "The value of the label has the wrong format"
+           level: "warn"
+           reference_url:
+              - "https://docs.docker.com/reference/builder/"
+              - "#from"
+  #
+  # The 'required_instructions' lists mandatory instructions
+  #
+  required_instructions:
+    #
+    # This rule says, you must have 1 "LABEL" instruction and the label keys "Vendor"
+    # and 'Authoritative_Registry' must be defined. The labels listed in
+    # 'required_labels' must be defined in the 'defined_label_rules' section of the
+    # 'LABEL' line rule above
+    #
+    -
+      instruction: "LABEL"
+      count: 1
+      level: "error"
+      message: "No LABELs are defined"
+      description: "Labels are needed because...."
+      reference_url:
+        - "https://docs.docker.com/reference/builder/"
+        - "#label"
