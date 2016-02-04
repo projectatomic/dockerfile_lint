@@ -43,9 +43,9 @@ function getRules(rulefile) {
     //First get the base rules
     var baseRuleLocation = fs.readFileSync(config.BASE_RULES, 'UTF-8');
     var baseRules = yamlParser.safeLoad(baseRuleLocation);
-    //console.log(JSON.stringify(baseRules,null,2));
+    ////console.log(JSON.stringify(baseRules,null,2));
   } catch (e) {
-    console.log("Error reading base rules " + e);
+    //console.log("Error reading base rules " + e);
     return null;
   }
   if (!rulefile) {
@@ -54,11 +54,11 @@ function getRules(rulefile) {
     try {
       var rules = yamlParser.safeLoad(rulefile);
       var combinedRules = extend(true, baseRules, rules);
-      //console.log(doc);
-      //console.log(JSON.stringify(combinedRules,null,2));
+      ////console.log(doc);
+      ////console.log(JSON.stringify(combinedRules,null,2));
       return combinedRules;
     } catch (e) {
-      console.log(e);
+      //console.log(e);
       return null;
     }
   }
@@ -73,14 +73,14 @@ function parseLabels(labels) {
   labels = labels.replace(/"/g, '');
   labels = labels.replace(/'/g, '');
   var x = labels.match(re);
-  console.log("labels are " +x)
+  ////console.log("labels are " +x)
   var obj = {};
   for (var i = 0; i < x.length; i++) {
     var split = x[i].split('=');
-    console.log("label key is " + split[0] )
+    ////console.log("label key is " + split[0] )
     obj[split[0].trim()] = split[1].trim();
   }
-  console.log("Parsed labels are " + printObject(obj))
+  //console.log("Parsed labels are " + printObject(obj))
   return obj;
 }
 
@@ -98,18 +98,18 @@ function createReqInstructionHash(ruleObj) {
 //TODO TestMe
 function createRequiredLabelsHash(ruleObj) {
   var hash = {};
-  console.log('Creating required labels hash')
+  ////console.log('Creating required labels hash')
   var label_rules = ruleObj.line_rules["LABEL"] || ruleObj.line_rules["Label"]
   if (label_rules && label_rules.defined_label_rules) {
     var arr = label_rules.defined_label_rules;
-    //console.log('looking for required labels')
+    ////console.log('looking for required labels')
     for (var i = 0, len = arr.length; i < len; i++) {
-      //console.log('Checking required label ' + JSON.stringify(Object.keys(arr[i])[0], null, 4));
+      ////console.log('Checking required label ' + JSON.stringify(Object.keys(arr[i])[0], null, 4));
       if (arr[i][Object.keys(arr[i])[0]].required) { //TODO we assume a single property - need to validate rule file
-        //console.log('Found required label ' + printObject(arr[i]))
+        ////console.log('Found required label ' + printObject(arr[i]))
         hash[Object.keys(arr[i])[0]] = arr[i];
         arr[i].exists = false;
-        console.log('Found required label ' + printObject(arr[i]))
+        ////console.log('Found required label ' + printObject(arr[i]))
       }
     }
   }
@@ -148,7 +148,7 @@ function checkRequiredInstructions(instructions, result) {
 function checkRequiredLabels(requiredLabels, result) {
   for (var requiredLabel in requiredLabels) {
     if (requiredLabels.hasOwnProperty(requiredLabel)) {
-      console.log("Required label "+ requiredLabels[requiredLabel])
+      ////console.log("Required label "+ requiredLabels[requiredLabel])
       if (!requiredLabels[requiredLabel].exists) {
         addError(result, -1, null,"Required label '" + requiredLabel + "' missing")
       }
@@ -159,7 +159,7 @@ function checkRequiredLabels(requiredLabels, result) {
 //TODO TestMe
 function checkLineRules(ruleObject, instruction, line, lineNumber, result) {
   if (!ruleObject.line_rules[instruction]) {
-    console.log("No Line Rules for instruction :" + instruction);
+    //console.log("No Line Rules for instruction :" + instruction);
     return;
   }
   var rules = ruleObject.line_rules[instruction].rules;
@@ -191,7 +191,7 @@ function createValidCommandRegex(commandList) {
     regexStr = regexStr + '\)\(\\\s\)\+';
     return new RegExp(regexStr, 'i');
   } else {
-    console.log("Invalid Paremeter for command regex");
+    //console.log("Invalid Paremeter for command regex");
     return null;
   }
 }
@@ -203,12 +203,12 @@ function findLabelRule(key, rules) {
     return null;
   }
   for (var i = 0; i < rules.length; i++) {
-    var keys = Object.keys(rules[i]);
-    console.log("keys to match")
-    console.log("Looking for match " + key)
+    var keys = Object.keys(rules);
+    ////console.log("keys to match")
+    //console.log("Looking for match of " + key)
     for (var j = 0; j < keys.length; j++) {
       if (rules[i].hasOwnProperty(key)) {
-        console.log("Found match :" +   printObject(rules[i]))
+        //console.log("Found match :" +   printObject(rules[i]))
         return rules[i];
       }
     }
@@ -216,29 +216,96 @@ function findLabelRule(key, rules) {
   return null;
 }
 
-
-function addError(result, lineNumber, linesArr, msg) {
-  result.error.data.push({
+function addResult(result, lineNumber, linesArr, msg, level) {
+  var target = null;
+  switch (level) {
+    case 'error':
+      target = result.error;
+      break;
+    case 'warn':
+      target = result.warn;
+      break;
+    case 'info':
+      target = result.info;
+      break;
+    default:
+      target = result.error;
+  }
+  //console.log("Pushing result to "+ printObject(target));
+  target.data.push({
     message: msg,
     line: lineNumber,
-    level: 'error',
-    lineContent: linesArr? linesArr[lineNumber - 1]: ''
+    level: level,
+    lineContent: linesArr ? linesArr[lineNumber - 1] : ''
   });
-  result.error.count++;
-};
+  target.count++;
+}
 
-function validateDefaultLabelRule(result, currentLine, linesArr,key,value,rule){
-  var valid = false;
+
+function addError(result, lineNumber, linesArr, msg) {
+   addResult(result, lineNumber, linesArr, msg, 'error');
+}
+
+function validateDefaultLabelRule(result, currentLine, linesArr, key, value, rule) {
+  var level = rule.level ? rule.level : 'error'
+  var valid = true;
+  var label = key + "=" + value
   if (rule.keyRegex && !eval(rule.keyRegex).exec(key)) {
-    addError(result, currentLine, linesArr, rule.key_error_message ? rules.key_error_message : 'Key for label ' + key + ' is not in required format');
+    addResult(result,
+      currentLine,
+      linesArr,
+      rule.key_error_message ? rules.key_error_message+ " ->'" + label + "'"  : 'Key for label ' + label + ' is not in required format',
+      level);
     valid = false;
   }
   if (rule.valueRegex && !eval(rule.valueRegex).exec(value)) {
-    addError(result, currentLine, linesArr, rule.value_error_message ? rule.value_error_message : 'Value for label ' + key + ' is not in required format');
+    addResult(result,
+      currentLine,
+      linesArr,
+      rule.value_error_message ?  rule.value_error_message + " ->'" + label + "'" : 'Value for label ' + label + ' is not in required format',
+      level);
     valid = false;
   }
+  //console.log("validation default rule for " + label + " valid ->" + valid );
   return valid;
+}
 
+//TODO test me
+function validateLabels(instruction,params,ruleObject,requiredLabels,result, currentLine, linesArr ) {
+  var labels = parseLabels(params);
+  if (!labels) {
+    addError(result, currentLine, linesArr, 'Invalid label syntax parameters');
+    return false;
+  }
+  var labelKeys = Object.keys(labels);
+  var defined_label_rules = ruleObject.line_rules[instruction].defined_label_rules ? ruleObject.line_rules[instruction].defined_label_rules : null
+  var default_rules = ruleObject.line_rules[instruction].default_label_rules ? ruleObject.line_rules[instruction].default_label_rules: null
+  if (defined_label_rules.length > 0) {
+    //console.log("len of defined label rules "+ defined_label_rules.length)
+    for (var i = 0; i < labelKeys.length; i++) {
+      //console.log("looking to find match for "+ labelKeys[i])
+      var labelRuleMatch = findLabelRule(labelKeys[i],defined_label_rules);
+      if (labelRuleMatch) {
+        var label_rule = labelRuleMatch[labelKeys[i]]
+        if (label_rule.required) {
+          requiredLabels[labelKeys[i]].exists = true;
+        }
+        if (label_rule.valueRegex && !eval(label_rule.valueRegex).exec(labels[labelKeys[i]])) {
+          var level = label_rule.level ? label_rule.level : 'error';
+          var label = labelKeys[i]+ "=" + labels[labelKeys[i]];
+          addResult(result,
+             currentLine,
+             linesArr,
+             label_rule.message ? label_rule.message+ " ->'" + label + "'"  : 'Value for label ' + label + ' is not in required format',
+             level);
+        }
+      }else if (default_rules) {
+        validateDefaultLabelRule(result, currentLine, linesArr, labelKeys[i], labels[labelKeys[i]], default_rules);
+      }
+    }
+  }else if (default_rules) {
+    validateDefaultLabelRule(result, currentLine, linesArr, labelKeys[i], labels[labelKeys[i]], default_rules);
+  }
 }
 
 /**
@@ -269,9 +336,9 @@ function Validator(rulefile) {
     dockerfile = dockerfile.trim();
 
     var requiredInstructions = createReqInstructionHash(ruleObject);
-    //console.log("Creating required labels hash1");
+    ////console.log("Creating required labels hash1");
     var requiredLabels = createRequiredLabelsHash(ruleObject);
-    //console.log("Creating required labels hash2");
+    ////console.log("Creating required labels hash2");
     var fromCheck = false;
     var currentLine = 0;
     //TODO to top level object
@@ -344,38 +411,7 @@ function Validator(rulefile) {
       //For now add special handling for labels.
       //TODO handle all name/value parameters generically
       if (instruction === "LABEL") {
-        var labels = parseLabels(params);
-        if (!labels) {
-          addError(result, currentLine, linesArr, 'Invalid label syntax parameters');
-          return false;
-        }
-        var labelKeys = Object.keys(labels);
-        var defined_label_rules = ruleObject.line_rules[instruction].defined_label_rules ? ruleObject.line_rules[instruction].defined_label_rules : null
-        var default_rules = ruleObject.line_rules[instruction].default_label_rules ? ruleObject.line_rules[instruction].default_label_rules: null
-        if (defined_label_rules.length > 0) {
-          for (var i = 0; i < labelKeys.length; i++) {
-            var labelRuleMatch = findLabelRule(labelKeys[i],defined_label_rules);
-            if (labelRuleMatch) {
-              var label_rule = labelRuleMatch[labelKeys[i]]
-              if (label_rule.required) {
-                requiredLabels[labelKeys[i]].exists = true;
-              }
-              if (label_rule.valueRegex && !eval(label_rule.valueRegex).exec(labels[labelKeys[i]])) {
-                addError(result, currentLine, linesArr, label_rule.message ? label_rule.message : 'Value for label ' + labelKeys[i] + ' is not in required format');
-                return false;
-              }
-            }else if (default_rules) {
-              if (!validateDefaultLabelRule(result, currentLine, linesArr, labelKeys[i], labels[labelKeys[i]], default_rules)){
-                 return false;
-              }
-            }
-          }
-          return true;
-        }else if (default_rules) {
-          if (!validateDefaultLabelRule(result, currentLine, linesArr, labelKeys[i], labels[labelKeys[i]], default_rules)){
-             return false;
-          }
-        }
+         validateLabels(instruction,params,ruleObject,requiredLabels, result, currentLine, linesArr)
       }
     }
     linesArr.forEach(validateLine);

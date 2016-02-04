@@ -53,7 +53,7 @@
            key_error_message: "The key of the label has the wrong format"
            valueRegex:  /^\d+$/
            value_error_message: "The value of the label has the wrong format"
-           level: "warn"
+           level: "error"
            reference_url:
               - "https://docs.docker.com/reference/builder/"
               - "#from"
@@ -62,11 +62,7 @@
   #
   required_instructions:
     #
-    # This rule says, you must have 1 "LABEL" instruction and the label keys "Vendor"
-    # and 'Authoritative_Registry' must be defined. The labels listed in
-    # 'required_labels' must be defined in the 'defined_label_rules' section of the
-    # 'LABEL' line rule above
-    #
+    # This rule says, you must have 1 "LABEL" instruction
     -
       instruction: "LABEL"
       count: 1
