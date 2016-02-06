@@ -25,9 +25,10 @@
     "url": "https://github.com/projectatomic/dockerfile_lint/issues"
   },
   "dependencies": {
-    "js-yaml": "~3.2.2",
+    "commander": "~2.5.0",
+    "docker-file-parser": "git+ssh://git@github.com/lphiri/node-docker-file-parser.git",
     "extend": "~2.0.0",
-    "commander": "~2.5.0"
+    "js-yaml": "~3.2.2"
   },
   "devDependencies": {
     "should": "~4.1.0",
