@@ -1,0 +1,9 @@
+#
+# Nginx Dockerfile
+#
+# https://github.com/dockerfile/nginx
+#
+EXPOSE 443
+# Pull base image.
+LABEL wrong
+MADEUP hello

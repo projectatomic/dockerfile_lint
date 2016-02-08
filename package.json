@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "commander": "~2.5.0",
-    "docker-file-parser": "git+ssh://git@github.com/lphiri/node-docker-file-parser.git",
     "extend": "~2.0.0",
     "js-yaml": "~3.2.2"
   },

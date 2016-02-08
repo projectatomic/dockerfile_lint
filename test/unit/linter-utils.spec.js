@@ -30,7 +30,7 @@ describe('parseLabels function', function() {
     console.log(obj);
   });
 });
-// 
+//
 // describe('createReqInstructionHash function', function() {
 //   it('should parse a multiple label string', function() {
 //     var labels = "vendor=devif";
