@@ -1,0 +1,11 @@
+#
+# Nginx Dockerfile
+#
+# https://github.com/dockerfile/nginx
+#
+
+# Pull base image.
+FROM ubuntu
+LABEL "VendorID"=12345 Authoritative_Registry="registry.redhat.com"  custom="customLabel" BZComponent="1234" \
+      #this is an embeded comment
+      grade=7 

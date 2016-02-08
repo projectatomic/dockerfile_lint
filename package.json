@@ -7,7 +7,7 @@
     "dockerfile_lint": "./bin/dockerfile_lint"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha './**/*spec.js'"
   },
   "repository": {
     "type": "git",
@@ -25,9 +25,9 @@
     "url": "https://github.com/projectatomic/dockerfile_lint/issues"
   },
   "dependencies": {
-    "js-yaml": "~3.2.2",
+    "commander": "~2.5.0",
     "extend": "~2.0.0",
-    "commander": "~2.5.0"
+    "js-yaml": "~3.2.2"
   },
   "devDependencies": {
     "should": "~4.1.0",
