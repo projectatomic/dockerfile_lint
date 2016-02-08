@@ -37,7 +37,25 @@
             valueRegex: /^\d+$/
             message: "Label 'BZComponent' has invalid format"
             level: "error"
-            required: true
+            required: recommended
+            reference_url:
+              - "https://docs.docker.com/reference/builder/"
+              - "#from"
+         -
+           Vendor:
+            valueRegex: /.+/
+            message: "Label 'Vendor' has invalid format"
+            level: "error"
+            required: false
+            reference_url:
+              - "https://docs.docker.com/reference/builder/"
+              - "#from"
+         -
+           Created_TimeStamp:
+            valueRegex: /.+/
+            message: "Label 'Created_TimeStamp' has invalid format"
+            level: "error"
+            required: recommended
             reference_url:
               - "https://docs.docker.com/reference/builder/"
               - "#from"
