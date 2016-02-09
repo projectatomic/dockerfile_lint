@@ -19,7 +19,7 @@ it.skip('should allow a valid Dockerfile', function (done) {
 var spawn = require('child_process').spawn;
 
 
-it.skip('Test Parser', function (done) {
+it('Test Parser', function (done) {
 //   console.log( process.env.PATH );
 //   var child = spawn('./bin/dockerfile_lint', ['-f', './test/data/dockerfiles/TestLabels']);
 //
@@ -41,6 +41,7 @@ it.skip('Test Parser', function (done) {
         + 'RUN echo done\n'
         + 'LABEL RUN docker run -it --rm --privileged -v `pwd`:/root/ \\ \n'
         + '# this is a comment inside a line\n'
+        + '# Another comment inside a line\n'
         + ' --name NAME -e NAME=NAME -e IMAGE=IMAGE IMAGE dockerfile_lint -f Dockerfile \n'
         + '# some comment here \n'
         + "one=1 two=3 'one two'=4";
