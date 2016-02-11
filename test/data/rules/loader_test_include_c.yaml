@@ -1,0 +1,17 @@
+---
+  profile:
+    name: "File C"
+    description: "Default Profile. Checks basic syntax."
+    includes:
+        - loader_test_include_b.yaml
+        - loader_test_include_a.yaml
+  required_instructions:
+      -
+        instruction: "EXPOSE"
+        count: 1
+        level: "info"
+        message: "From C"
+        description: "From C"
+        reference_url:
+          - "https://docs.docker.com/reference/builder/"
+          - "#expose"

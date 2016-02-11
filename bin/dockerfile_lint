@@ -133,16 +133,14 @@ try {
     }
 }
 if (rulefileLocation !== null) {
-    try {
-        rulefile = fs.readFileSync(rulefileLocation, 'UTF-8');
-    } catch (e) {
+    if (!fs.existsSync(rulefileLocation)) {
         console.error('ERROR: Rule file not found -> ' + rulefileLocation);
         process.exit(1);
     }
 }
 
-function runValidation(dockerfile, rulefile) {
-    var validator = new DockeFileValidator(rulefile);
+function runValidation(dockerfile, rulefileLocation) {
+    var validator = new DockeFileValidator(rulefileLocation);
     var results = validator.validate(dockerfile);
     if (printJson) {
         printJsonResults(results);
@@ -159,9 +157,9 @@ function runValidation(dockerfile, rulefile) {
 
 if (remoteFile) {
     downloadDockerfile(dockerfileLocation, function (dockerfile) {
-        runValidation(dockerfile, rulefile);
+        runValidation(dockerfile, rulefileLocation);
     });
 } else {
-    runValidation(dockerfile, rulefile);
+    runValidation(dockerfile, rulefileLocation);
 }
 
