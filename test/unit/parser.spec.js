@@ -1,5 +1,4 @@
 'use strict';
-
 require('should');
 
 var parser = require('../../lib/parser');
@@ -20,17 +19,19 @@ describe('parse function', function () {
             + "LABEL two=3 'one two'=4";
 
         var commands = parser.parse(contents, options);
-        commands.length.should.eql(7);
+        commands.length.should.eql(7); //one less because of continuation line
         commands[1].name.should.eql('COMMENT');
         commands[1].args.should.eql('#Comment1');
-        commands[3].name.should.eql('COMMENT');
-        commands[3].args.should.eql('#Comment2');
-        commands[4].args.should.eql({
+
+        commands[3].name.should.eql('LABEL');
+        commands[3].args.should.eql({
             RUN: 'docker run -it --rm --privileged -v `pwd`:/root/ --name NAME -e NAME=NAME -e IMAGE=IMAGE IMAGE dockerfile_lint -f Dockerfile'
         }); //handle comments inside continuation line
+        commands[4].name.should.eql('COMMENT');
+        commands[4].args.should.eql('#Comment2');
         commands[5].name.should.eql('COMMENT');
         commands[5].args.should.eql('#Comment3');
-        commands[4].name.should.eql('LABEL');
+
     });
 
     it('should correctly strip out comments when asked to', function () {

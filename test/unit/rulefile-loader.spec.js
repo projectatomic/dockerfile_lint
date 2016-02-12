@@ -40,7 +40,8 @@ describe('rule file loader function', function () {
          // file C should load rules in the order A -> B -> C, with B overriding in values in A
          // and C overriding values in both A and B
          //
-        var rules = loadRule('../data/rules/loader_test_include_c.yaml');
+        console.log(__dirname);
+        var rules = loadRule('./test/data/rules/loader_test_include_c.yaml');
         console.log("RULE OBJECT is : \n" + JSON.stringify(rules, null, 2));
 
     });

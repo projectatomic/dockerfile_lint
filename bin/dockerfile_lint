@@ -6,6 +6,7 @@ var fs = require('fs');
 var util = require('util');
 var path = require('path');
 var commandline = require('commander');
+var logger = require("../lib/logger");
 
 var config = require('../config/config');
 var DockeFileValidator = require('../');
@@ -107,12 +108,18 @@ var remoteFile = false;
 commandline.option('-j, --json', 'Show results in JSON format')
     .option('-r, --rulefile [rulefile] (optional)', 'Rule file', rulefile)
     .option('-f, --dockerfile [dockerfile] (required)', 'File to lint. Accepts a local file or an http(s) URL', dockerfile)
+    .option('-v, --verbose', 'Show debugging logs')
     .parse(process.argv);
 
+if (commandline.verbose){
+    if (logger.transports.console) logger.transports.console.level = 'debug';
+    if (logger.transports.file) logger.transports.file.level = 'debug';
+}
 
 if (commandline.json) {
     printJson = true;
 }
+
 if (!commandline.dockerfile) {
     commandline.help();
 }

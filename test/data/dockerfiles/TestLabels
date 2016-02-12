@@ -36,4 +36,4 @@ LABEL VendorID=12345 Authoritative_Registry="registry.redhat.com"  "custom"="cus
 #another comment
 
 LABEL RUN docker run -it --rm --privileged -v `pwd`:/root/ --name NAME -e NAME=NAME -e IMAGE=IMAGE IMAGE dockerfile_lint -f Dockerfile
-INVALIDTEST
+#INVALIDTEST
