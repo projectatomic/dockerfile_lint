@@ -31,7 +31,8 @@
     "winston": "^2.1.1"
   },
   "devDependencies": {
-    "should": "~4.1.0",
-    "mocha": "~2.0.1"
+    "mocha": "~2.0.1",
+    "pre-commit": "^1.1.2",
+    "should": "~4.1.0"
   }
 }
