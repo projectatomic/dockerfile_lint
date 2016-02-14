@@ -24,6 +24,9 @@
     ignore_regex: /^#/
     multiline_regex: /\\$/
   line_rules:
+    ARG:
+          paramSyntaxRegex: /.+/
+          rules: []
     FROM:
       paramSyntaxRegex: /.+/
       rules: []

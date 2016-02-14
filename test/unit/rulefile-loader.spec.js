@@ -2,7 +2,7 @@
 
 require('should');
 
-var loadRule = require('../../lib/rulefile-loader');
+var loadRule = require('../../lib/rulefile-loader').load;
 
 
 describe('rule file loader function', function () {
@@ -42,7 +42,7 @@ describe('rule file loader function', function () {
          //
         console.log(__dirname);
         var rules = loadRule('./test/data/rules/loader_test_include_c.yaml');
-        console.log("RULE OBJECT is : \n" + JSON.stringify(rules, null, 2));
+        //console.log("RULE OBJECT is : \n" + JSON.stringify(rules, null, 2));
 
     });
 

@@ -87,7 +87,7 @@ var utils = require('../../lib/linter-utils');
 // });
 //
 //
-// describe('checkRequiredLabels function', function() {
+// describe('checkRequiredNameVals function', function() {
 //   it('should parse a multiple label string', function() {
 //     var labels = "vendor=devif";
 //     var obj = utils.parseLabels(labels);
@@ -149,7 +149,7 @@ var utils = require('../../lib/linter-utils');
 //   });
 // });
 //
-// describe('findLabelRule function', function() {
+// describe('findKeyValRule function', function() {
 //   it('should parse a multiple label string', function() {
 //     var labels = "vendor=devif";
 //     var obj = utils.parseLabels(labels);
@@ -209,7 +209,7 @@ var utils = require('../../lib/linter-utils');
 //   });
 // });
 //
-// describe('validateDefaultLabelRule function', function() {
+// describe('validateNameValRule function', function() {
 //   it('should parse a multiple label string', function() {
 //     var labels = "vendor=devif";
 //     var obj = utils.parseLabels(labels);

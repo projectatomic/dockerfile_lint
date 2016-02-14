@@ -22,7 +22,6 @@ describe('parse function', function () {
         commands.length.should.eql(7); //one less because of continuation line
         commands[1].name.should.eql('COMMENT');
         commands[1].args.should.eql('#Comment1');
-
         commands[3].name.should.eql('LABEL');
         commands[3].args.should.eql({
             RUN: 'docker run -it --rm --privileged -v `pwd`:/root/ --name NAME -e NAME=NAME -e IMAGE=IMAGE IMAGE dockerfile_lint -f Dockerfile'
@@ -41,7 +40,7 @@ describe('parse function', function () {
         var contents = 'FROM ubuntu:latest\n'
             + '#Comment1\n'
             + 'RUN echo done\n'
-            + "LABEL two=3 'one two'=4"
+            + "LABEL two=3 'one two'=4 three="
             + '#Comment2\n'
             + '#Comment3 \n';
         var commands = parser.parse(contents, options);
@@ -66,6 +65,20 @@ describe('parse function', function () {
             + "LABEL two=2";  //Valid label
         commands = parser.parse(contents, options);
         commands[2].should.not.have.property('error');
+    });
+
+    it('should correctly report errors', function () {
+        var options = {
+            includeComments: false
+        };
+        var contents = 'FROM ubuntu:latest\n'
+            + "ARG arg1='' 2 arg2=2 arg3=\n"
+            + 'ENV echo done\n'
+            + 'ENV echo=done  three=4\n'
+            + "LABEL two4";  //Invalid label
+        var commands = parser.parse(contents, options);
+        console.log(JSON.stringify(commands, null, 2))
+
     })
 
 
