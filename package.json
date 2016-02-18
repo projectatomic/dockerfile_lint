@@ -7,7 +7,7 @@
     "dockerfile_lint": "./bin/dockerfile_lint"
   },
   "scripts": {
-    "test": "mocha './**/*spec.js'"
+    "test": "mocha 'test/**/*spec.js'"
   },
   "repository": {
     "type": "git",
@@ -26,8 +26,9 @@
   },
   "dependencies": {
     "commander": "~2.5.0",
-    "extend": "~2.0.0",
+    "extendify": "git+ssh://git@github.com/lphiri/extendify.git",
     "js-yaml": "~3.2.2",
+    "lodash": "^4.5.0",
     "winston": "^2.1.1"
   },
   "devDependencies": {

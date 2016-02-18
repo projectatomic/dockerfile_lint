@@ -62,24 +62,12 @@ describe('parse function', function () {
         contents = 'FROM ubuntu:latest\n'
             + '#Comment1\n'
             + 'RUN echo done\n'
+            + "LABEL two4\n" //Invalid label
             + "LABEL two=2";  //Valid label
         commands = parser.parse(contents, options);
-        commands[2].should.not.have.property('error');
+        commands[2].should.have.property('error');
+        commands[3].should.not.have.property('error');
     });
-
-    it('should correctly report errors', function () {
-        var options = {
-            includeComments: false
-        };
-        var contents = 'FROM ubuntu:latest\n'
-            + "ARG arg1='' 2 arg2=2 arg3=\n"
-            + 'ENV echo done\n'
-            + 'ENV echo=done  three=4\n'
-            + "LABEL two4";  //Invalid label
-        var commands = parser.parse(contents, options);
-        console.log(JSON.stringify(commands, null, 2))
-
-    })
 
 
 });

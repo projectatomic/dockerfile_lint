@@ -1,14 +1,16 @@
 ---
   profile:
-    name: "Default"
-    description: "Default Profile. Checks basic syntax."
+    name: "Profile B"
+    description: "Profile B"
+    includes:
+        - loader_test_include_a.yaml
 
   line_rules: 
     FROM:
       paramSyntaxRegex: /fileb/
       rules: 
         - 
-          label: "is_latest_tag"
+          label: "From Profile B"
           regex: /latest/
           level: "info"
           message: "From profile B"
@@ -20,7 +22,7 @@
           label: "no_tag"
           regex: /^[:]/
           level: "warn"
-          message: "From profile b"
+          message: "From Profile B"
           description: "lorem ipsum tar"
           reference_url: 
             - "https://docs.docker.com/reference/builder/"

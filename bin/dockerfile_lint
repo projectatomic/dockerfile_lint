@@ -2,14 +2,13 @@
 
 'use strict';
 
-var fs = require('fs');
-var util = require('util');
-var path = require('path');
-var commandline = require('commander');
-var logger = require("../lib/logger");
-
-var config = require('../config/config');
-var DockeFileValidator = require('../');
+var fs = require('fs'),
+    util = require('util'),
+    path = require('path'),
+    commandline = require('commander'),
+    logger = require("../lib/logger"),
+    config = require('../config/config'),
+    DockeFileValidator = require('../');
 
 
 function getRefUrl(url) {
@@ -111,7 +110,7 @@ commandline.option('-j, --json', 'Show results in JSON format')
     .option('-v, --verbose', 'Show debugging logs')
     .parse(process.argv);
 
-if (commandline.verbose){
+if (commandline.verbose) {
     if (logger.transports.console) logger.transports.console.level = 'debug';
     if (logger.transports.file) logger.transports.file.level = 'debug';
 }

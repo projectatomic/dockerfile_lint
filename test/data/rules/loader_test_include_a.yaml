@@ -1,21 +1,21 @@
 ---
   profile:
-    name: "Default"
-    description: "Default Profile. Checks basic syntax."
+    name: "Profile A"
+    description: "Profile A"
 
   line_rules:
     RUN: 
       paramSyntaxRegex: /file_a/
       rules: 
         - 
-          label: "from_file_a"
+          label: "From A"
           regex: /yum ((?!clean all).)* .+/
           level: "warn"
-          message: "from a"
+          message: "From A"
           description: "the yum cache will remain in this layer making the layer unnecessarily large"
           reference_url: "None"
         - 
-          label: "from a"
+          label: "From A"
           regex: /ssh/
           level: "warn"
           message: "installing SSH in a container is not recommended"

@@ -1,0 +1,31 @@
+---
+  profile:
+    name: "File Cyclic"
+    description: "Default Profile. Checks basic syntax."
+    includes:
+        - loader_test_include_b.yaml
+        - loader_test_include_a.yaml
+
+  line_rules:
+      FROM:
+        paramSyntaxRegex: /fileb/
+        rules:
+          -
+            label: "is_latest_tag"
+            regex: /latest/
+            level: "info"
+            message: "From profile B"
+            description: "using the 'latest' tag may cause unpredictable builds. It is recommended that a specific tag is used in the FROM line."
+            reference_url:
+              - "https://docs.docker.com/reference/builder/"
+              - "#from"
+  required_instructions:
+      -
+        instruction: "EXPOSE"
+        count: 1
+        level: "info"
+        message: "From C"
+        description: "From C"
+        reference_url:
+          - "https://docs.docker.com/reference/builder/"
+          - "#expose"
