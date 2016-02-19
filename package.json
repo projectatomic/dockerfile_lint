@@ -26,9 +26,8 @@
   },
   "dependencies": {
     "commander": "~2.5.0",
-    "extendify": "git+ssh://git@github.com/lphiri/extendify.git",
     "js-yaml": "~3.2.2",
-    "lodash": "^4.5.0",
+    "lodash": "^2.4.2",
     "winston": "^2.1.1"
   },
   "devDependencies": {
