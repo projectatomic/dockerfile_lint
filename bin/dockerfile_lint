@@ -33,7 +33,7 @@ function printEntry(entry, level) {
     var message = entry.message ? entry.message : " ";
     var description = entry.description ? (". " + entry.description + ". ") : ". ";
     console.log(level + ": " + message + description +
-        "Reference -> " + ref_url);
+        "\nReference -> " + ref_url);
     console.log("\n");
 
 }

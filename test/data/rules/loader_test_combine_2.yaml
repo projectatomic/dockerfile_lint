@@ -18,7 +18,6 @@
           LABEL:
             paramSyntaxRegex: /file2/
             defined_namevals:
-                 -
                    VendorID:
                      valueRegex: /^\d+$/
                      message: "Label 'Vendor ID' is has invalid format"

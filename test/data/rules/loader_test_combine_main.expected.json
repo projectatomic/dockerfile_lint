@@ -100,32 +100,30 @@
           ]
         }
       ],
-      "defined_namevals": [
-        {
-          "VendorID": {
-            "valueRegex": "/^\\d+$/",
-            "message": "Label 'Vendor ID' is has invalid format",
-            "level": "error",
-            "required": true,
-            "reference_url": [
-              "https://docs.docker.com/reference/builder/",
-              "#from"
-            ]
-          }
+      "defined_namevals": {
+        "VendorID": {
+          "valueRegex": "/^\\d+$/",
+          "message": "Label 'Vendor ID' is has invalid format",
+          "level": "error",
+          "required": "recommended",
+          "reference_url": [
+            "https://docs.docker.com/reference/builder/",
+            "#from",
+            "https://docs.docker.com/reference/builder/",
+            "#from"
+          ]
         },
-        {
-          "Authoritative_Registry": {
-            "valueRegex": "/.+/",
-            "message": "Label 'Authoritative_Registry' has invalid format",
-            "level": "error",
-            "required": true,
-            "reference_url": [
-              "https://docs.docker.com/reference/builder/",
-              "#from"
-            ]
-          }
+        "Authoritative_Registry": {
+          "valueRegex": "/.+/",
+          "message": "Label 'Authoritative_Registry' has invalid format",
+          "level": "error",
+          "required": true,
+          "reference_url": [
+            "https://docs.docker.com/reference/builder/",
+            "#from"
+          ]
         }
-      ]
+      }
     },
     "EXPOSE": {
       "paramSyntaxRegex": "/.+/",
