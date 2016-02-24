@@ -21,19 +21,3 @@ it('should allow a valid Dockerfile', function (done) {
 });
 
 
-it('Test Parser', function (done) {
-//   console.log( process.env.PATH );
-//   var child = spawn('./bin/dockerfile_lint', ['-f', './test/data/dockerfiles/TestLabels']);
-//
-//   // Listen for stdout data
-//   child.stdout.on('data', function (data) {
-//       console.log("Got data from child: " + data);
-//   });
-//
-//   // Listen for an exit event:
-//   child.on('exit', function (exitCode) {
-//       console.log("Child exited with code: " + exitCode);
-//   })
-    done();
-
-});
