@@ -1,4 +1,4 @@
-
+[![Build Status](https://travis-ci.org/projectatomic/dockerfile_lint.svg?branch=master)](https://travis-ci.org/projectatomic/dockerfile_lint)
 #dockerfile-lint
 
 A rule based 'linter' for [Dockerfiles](https://docs.docker.com/reference/builder/). The linter rules can be used  to check file syntax as well as arbitrary semantic and best practice attributes determined by the rule file writer.
