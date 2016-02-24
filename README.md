@@ -1,3 +1,4 @@
+[![NPM](https://nodei.co/npm/dockerfile_lint.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/dockerfile_lint/)
 [![Build Status](https://travis-ci.org/projectatomic/dockerfile_lint.svg?branch=master)](https://travis-ci.org/projectatomic/dockerfile_lint)
 #dockerfile-lint
 
