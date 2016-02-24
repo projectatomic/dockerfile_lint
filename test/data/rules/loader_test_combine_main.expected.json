@@ -1,0 +1,190 @@
+{
+  "profile": {
+    "name": "Combined Profile",
+    "description": "Tests creation of profile by combining two separate profiles",
+    "includes": [
+      "loader_test_combine_1.yaml",
+      "loader_test_combine_2.yaml"
+    ]
+  },
+  "general": {
+    "ref_url_base": "https://docs.docker.com/reference/builder/",
+    "valid_instructions": [
+      "FROM",
+      "MAINTAINER",
+      "RUN",
+      "CMD",
+      "LABEL",
+      "EXPOSE",
+      "ENV",
+      "ADD",
+      "COPY",
+      "ENTRYPOINT",
+      "VOLUME",
+      "USER",
+      "WORKDIR",
+      "ONBUILD",
+      "ARG",
+      "STOPSIGNAL"
+    ],
+    "ignore_regex": "/^#/",
+    "multiline_regex": "/\\\\$/"
+  },
+  "line_rules": {
+    "ARG": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
+    "FROM": {
+      "paramSyntaxRegex": "/file1/",
+      "rules": [
+        {
+          "label": "from rule2",
+          "regex": "/latest/",
+          "level": "error",
+          "message": "From rule 2",
+          "description": "FROM from profile 2",
+          "reference_url": [
+            "https://docs.docker.com/reference/builder/",
+            "#from"
+          ]
+        },
+        {
+          "label": "from rule1",
+          "regex": "/latest/",
+          "level": "error",
+          "message": "From rule 1",
+          "description": "FROM from profile 1",
+          "reference_url": [
+            "https://docs.docker.com/reference/builder/",
+            "#from"
+          ]
+        }
+      ]
+    },
+    "MAINTAINER": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
+    "RUN": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
+    "CMD": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
+    "LABEL": {
+      "paramSyntaxRegex": "/file1/",
+      "rules": [
+        {
+          "label": "is_latest_tag",
+          "regex": "/latest/",
+          "level": "info",
+          "message": "LABEL from profile 2",
+          "description": "FROM from profile 2",
+          "reference_url": [
+            "https://docs.docker.com/reference/builder/",
+            "#from"
+          ]
+        },
+        {
+          "label": "is_latest_tag",
+          "regex": "/latest/",
+          "level": "info",
+          "message": "LABEL from profile 1",
+          "description": "LABEL from profile 1",
+          "reference_url": [
+            "https://docs.docker.com/reference/builder/",
+            "#from"
+          ]
+        }
+      ],
+      "defined_namevals": {
+        "VendorID": {
+          "valueRegex": "/^\\d+$/",
+          "message": "Label 'Vendor ID' is has invalid format",
+          "level": "error",
+          "required": "recommended",
+          "reference_url": [
+            "https://docs.docker.com/reference/builder/",
+            "#from",
+            "https://docs.docker.com/reference/builder/",
+            "#from"
+          ]
+        },
+        "Authoritative_Registry": {
+          "valueRegex": "/.+/",
+          "message": "Label 'Authoritative_Registry' has invalid format",
+          "level": "error",
+          "required": true,
+          "reference_url": [
+            "https://docs.docker.com/reference/builder/",
+            "#from"
+          ]
+        }
+      }
+    },
+    "EXPOSE": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
+    "ENV": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
+    "ADD": {
+      "paramSyntaxRegex": "/.+/"
+    },
+    "COPY": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
+    "ENTRYPOINT": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
+    "VOLUME": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
+    "USER": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
+    "WORKDIR": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
+    "ONBUILD": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    }
+  },
+  "required_instructions": {
+    "EXPOSE": {
+      "instruction": "EXPOSE",
+      "count": 1,
+      "level": "info",
+      "message": "From combine 2",
+      "description": "From combine 2",
+      "reference_url": [
+        "https://docs.docker.com/reference/builder/",
+        "#expose"
+      ]
+    },
+    "ENV": {
+      "instruction": "ENV",
+      "count": 1,
+      "level": "info",
+      "message": "From combine 1",
+      "description": "From combine 1",
+      "reference_url": [
+        "https://docs.docker.com/reference/builder/",
+        "#env"
+      ]
+    }
+  },
+  "discouraged_instructions": [],
+  "mutually_exclusive_instructions": []
+}

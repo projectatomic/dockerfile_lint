@@ -1,0 +1,6 @@
+---
+  profile:
+    name: "Test"
+    description: "Bad Include Test"
+    includes:
+       - include_non_exitent.yml

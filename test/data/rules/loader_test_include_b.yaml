@@ -1,0 +1,29 @@
+---
+  profile:
+    name: "Profile B"
+    description: "Profile B"
+    includes:
+        - loader_test_include_a.yaml
+
+  line_rules: 
+    FROM:
+      paramSyntaxRegex: /fileb/
+      rules: 
+        - 
+          label: "From Profile B"
+          regex: /latest/
+          level: "info"
+          message: "From profile B"
+          description: "using the 'latest' tag may cause unpredictable builds. It is recommended that a specific tag is used in the FROM line."
+          reference_url: 
+            - "https://docs.docker.com/reference/builder/"
+            - "#from"
+        - 
+          label: "no_tag"
+          regex: /^[:]/
+          level: "warn"
+          message: "From Profile B"
+          description: "lorem ipsum tar"
+          reference_url: 
+            - "https://docs.docker.com/reference/builder/"
+            - "#from"

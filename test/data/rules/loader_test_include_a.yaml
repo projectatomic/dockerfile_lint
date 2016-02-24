@@ -1,0 +1,33 @@
+---
+  profile:
+    name: "Profile A"
+    description: "Profile A"
+
+  line_rules:
+    RUN: 
+      paramSyntaxRegex: /file_a/
+      rules: 
+        - 
+          label: "From A"
+          regex: /yum ((?!clean all).)* .+/
+          level: "warn"
+          message: "From A"
+          description: "the yum cache will remain in this layer making the layer unnecessarily large"
+          reference_url: "None"
+        - 
+          label: "From A"
+          regex: /ssh/
+          level: "warn"
+          message: "installing SSH in a container is not recommended"
+          description: "Do you really need SSH in this image?"
+          reference_url: "https://github.com/jpetazzo/nsenter"
+  required_instructions: 
+    - 
+      instruction: "MAINTAINER"
+      count: 1
+      level: "info"
+      message: "From file A"
+      description: "From profile A"
+      reference_url: 
+        - "https://docs.docker.com/reference/builder/"
+        - "#maintainer"

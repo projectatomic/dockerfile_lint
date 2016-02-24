@@ -1,0 +1,56 @@
+---
+  profile:
+    name: "Combine source 1"
+    description: "Fragment profile to be included in other profiles"
+  line_rules:
+      FROM:
+        paramSyntaxRegex: /file1/
+        rules:
+          -
+            label: "from rule1"
+            regex: /latest/
+            level: "error"
+            message: "From rule 1"
+            description: "FROM from profile 1"
+            reference_url:
+              - "https://docs.docker.com/reference/builder/"
+              - "#from"
+      LABEL:
+        paramSyntaxRegex: /file1/
+        defined_namevals:
+               VendorID:
+                  valueRegex: /^\d+$/
+                  message: "Label 'Vendor ID' is has invalid format"
+                  level: "error"
+                  required: 'recommended'
+                  reference_url:
+                    - "https://docs.docker.com/reference/builder/"
+                    - "#from"
+               Authoritative_Registry:
+                 valueRegex: /.+/
+                 message: "Label 'Authoritative_Registry' has invalid format"
+                 level: "error"
+                 required: true
+                 reference_url:
+                   - "https://docs.docker.com/reference/builder/"
+                   - "#from"
+        rules:
+          -
+            label: "is_latest_tag"
+            regex: /latest/
+            level: "info"
+            message: "LABEL from profile 1"
+            description: "LABEL from profile 1"
+            reference_url:
+              - "https://docs.docker.com/reference/builder/"
+              - "#from"
+  required_instructions:
+      -
+        instruction: "ENV"
+        count: 1
+        level: "info"
+        message: "From combine 1"
+        description: "From combine 1"
+        reference_url:
+          - "https://docs.docker.com/reference/builder/"
+          - "#env"

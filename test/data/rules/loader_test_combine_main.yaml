@@ -1,0 +1,7 @@
+---
+  profile:
+    name: "Combined Profile"
+    description: "Tests creation of profile by combining two separate profiles"
+    includes:
+        - loader_test_combine_1.yaml
+        - loader_test_combine_2.yaml
