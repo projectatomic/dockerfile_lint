@@ -2,8 +2,6 @@
 profile:
   description: "Label checking rule file."
   name: Label
-  includes:
-    - required_label_rules.yaml
 line_rules:
   ENV:
     defined_namevals:
