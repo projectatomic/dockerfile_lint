@@ -138,7 +138,7 @@ dockerfile_lint  -h
 ```
 
 #Credits
-The linter is based on https://github.com/Runnable/validate-dockerfile and https://github.com/goern/dockerfile_checker
+The linter is based on https://github.com/aweiteka/dockerfile_checker
 
 # License
 MIT
