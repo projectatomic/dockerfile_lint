@@ -19,7 +19,7 @@ it('should allow a valid Dockerfile', function (done) {
         });
 });
 
-it('should exit with code 0 on warning when in strict mode ', function (done) {
+it('should exit with code 0 on warning when in permissive mode ', function (done) {
     var p = exec('./bin/dockerfile_lint  -p -f test/data/dockerfiles/TestLabels -r sample_rules/basic_rules.yaml',
         function (err, stdout, stderr) {
         });
