@@ -32,7 +32,7 @@
       rules: 
         - 
           label: "no_yum_clean_all"
-          regex: /yum(?!.+clean all|.+repo)/g
+          regex: /yum(?!.+clean all|.+\.repo)/g
           level: "warn"
           message: "yum clean all is not used"
           description: "the yum cache will remain in this layer making the layer unnecessarily large"
