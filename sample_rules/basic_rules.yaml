@@ -38,6 +38,20 @@
           description: "the yum cache will remain in this layer making the layer unnecessarily large"
           reference_url: "None"
         - 
+          label: "no_dnf_clean_all"
+          regex: /dnf(?!.+clean all|.+\.repo)/g
+          level: "warn"
+          message: "dnf clean all is not used"
+          description: "the dnf cache will remain in this layer making the layer unnecessarily large"
+          reference_url: "None"
+        - 
+          label: "no_rvm_cleanup_all"
+          regex: /rvm(?!.+cleanup all)/g
+          level: "warn"
+          message: "rvm cleanup is not used"
+          description: "the rvm cache will remain in this layer making the layer unnecessarily large"
+          reference_url: "None"
+        - 
           label: "installing_ssh"
           regex: /ssh/
           level: "warn"
