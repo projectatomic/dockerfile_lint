@@ -2,6 +2,8 @@
   profile:
     name: "Default"
     description: "Default Profile. Checks basic syntax."
+    includes:
+      - recommended_label_rules.yaml 
   line_rules: 
     FROM: 
       paramSyntaxRegex: /^[a-z0-9./-]+(:[a-z0-9.]+)?$/
@@ -46,10 +48,17 @@
           reference_url: "None"
         - 
           label: "no_rvm_cleanup_all"
-          regex: /rvm(?!.+cleanup all)/g
+          regex: /rvm install(?!.+cleanup all)/g
           level: "warn"
           message: "rvm cleanup is not used"
           description: "the rvm cache will remain in this layer making the layer unnecessarily large"
+          reference_url: "None"
+        - 
+          label: "no_gem_clean_all"
+          regex: /gem install(?!.+cleanup|.+\rvm cleanup all)/g
+          level: "warn"
+          message: "dnf clean all is not used"
+          description: "the dnf cache will remain in this layer making the layer unnecessarily large"
           reference_url: "None"
         - 
           label: "installing_ssh"
@@ -72,8 +81,10 @@
     ENTRYPOINT: 
       paramSyntaxRegex: /.+/
       rules: []
-    VOLUME: 
-      paramSyntaxRegex: /^~?([A-z0-9\/_.-]+|\["[A-z0-9\/_.-]+"\])$/
+    VOLUME:
+      # ^~?([A-z0-9\/_.-]+|\[\"[A-z0-9\/_.-]+\"\])$
+      # Not sure what they were trying to match here 
+      paramSyntaxRegex: /.+/
       rules: []
     USER: 
       paramSyntaxRegex: /^[a-z_][a-z0-9_]{0,30}$/
