@@ -7,7 +7,7 @@ A rule based 'linter' for [Dockerfiles](https://docs.docker.com/reference/builde
 #Quickstart
 
 1. Change to directory where you have a Dockerfile
-1. run
+2. run
   * Atomic CLI
 
             atomic run projectatomic/dockerfile-lint
@@ -17,6 +17,12 @@ A rule based 'linter' for [Dockerfiles](https://docs.docker.com/reference/builde
             docker run -it --rm --privileged -v `pwd`:/root/ \
                    projectatomic/dockerfile-lint \
                    dockerfile_lint -f Dockerfile
+                   
+By default, the linter runs in strict mode (errors and/or warnings result in non-zero return code). Run the command with '-p'  or '--permissive to
+run in permissive mode:
+            docker run -it --rm --privileged -v `pwd`:/root/ \
+                               projectatomic/dockerfile-lint \
+                               dockerfile_lint -p -f Dockerfile
 
 #Extending and Customizing: Rule Files
 Rule files are written in [yaml](http://www.yaml.org/). See the example rule file **sample_rules.yaml** in the root folder of the project.
