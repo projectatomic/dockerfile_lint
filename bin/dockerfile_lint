@@ -102,12 +102,14 @@ var dockerfile = null;
 var rulefile = null;
 var printJson = false;
 var remoteFile = false;
+var permissiveMode = false;
 
 
 commandline.option('-j, --json', 'Show results in JSON format')
     .option('-r, --rulefile [rulefile] (optional)', 'Rule file', rulefile)
     .option('-f, --dockerfile [dockerfile] (required)', 'File to lint. Accepts a local file or an http(s) URL', dockerfile)
     .option('-v, --verbose', 'Show debugging logs')
+    .option('-p, --permissive', 'Run in permissive mode (return 1 only on error but not on warning)')
     .parse(process.argv);
 
 if (commandline.verbose) {
@@ -121,6 +123,9 @@ if (commandline.json) {
 
 if (!commandline.dockerfile) {
     commandline.help();
+}
+if (commandline.permissive) {
+    permissiveMode = true;
 }
 
 dockerfileLocation = commandline.dockerfile;
@@ -154,7 +159,7 @@ function runValidation(dockerfile, rulefileLocation) {
         printResults(results);
     }
 
-    if (results.error.count > 0) {
+    if ((results.error.count > 0) || (!permissiveMode && results.warn.count > 0)) {
         process.exit(1);
     } else {
         process.exit(0);

@@ -59,7 +59,7 @@
       paramSyntaxRegex: /.+/
       rules: []
     VOLUME: 
-      paramSyntaxRegex: /^~?([A-z0-9\/_.-]+|\["[A-z0-9\/_.-]+"\])$/
+      paramSyntaxRegex: /.+/
       rules: []
     USER: 
       paramSyntaxRegex: /^[a-z_][a-z0-9_]{0,30}$/
