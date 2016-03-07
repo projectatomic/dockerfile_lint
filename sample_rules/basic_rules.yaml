@@ -2,6 +2,8 @@
   profile:
     name: "Default"
     description: "Default Profile. Checks basic syntax."
+    includes:
+      - recommended_label_rules.yaml 
   line_rules: 
     FROM: 
       paramSyntaxRegex: /^[a-z0-9./-]+(:[a-z0-9.]+)?$/
@@ -15,7 +17,6 @@
           reference_url: 
             - "https://docs.docker.com/reference/builder/"
             - "#from"
-        - 
           label: "no_tag"
           regex: /^[:]/
           level: "warn"
@@ -32,12 +33,40 @@
       rules: 
         - 
           label: "no_yum_clean_all"
-          regex: /yum ((?!clean all).)* .+/
+          regex: /yum(?!.+clean all|.+\.repo)/g
           level: "warn"
           message: "yum clean all is not used"
           description: "the yum cache will remain in this layer making the layer unnecessarily large"
-          reference_url: "None"
-        - 
+          reference_url: 
+            - "https://github.com/projectatomic/container-best-practices/blob/master/creating/creating_index.adoc#"
+            - "clear-packaging-caches-and-temporary-package-downloads"
+
+          label: "no_dnf_clean_all"
+          regex: /dnf(?!.+clean all|.+\.repo)/g
+          level: "warn"
+          message: "dnf clean all is not used"
+          description: "the dnf cache will remain in this layer making the layer unnecessarily large"
+          reference_url: 
+            - "https://github.com/projectatomic/container-best-practices/blob/master/creating/creating_index.adoc#"
+            - "clear-packaging-caches-and-temporary-package-downloads"
+ 
+          label: "no_rvm_cleanup_all"
+          regex: /rvm install(?!.+cleanup all)/g
+          level: "warn"
+          message: "rvm cleanup is not used"
+          description: "the rvm cache will remain in this layer making the layer unnecessarily large"
+          reference_url: 
+            - "https://github.com/projectatomic/container-best-practices/blob/master/creating/creating_index.adoc#"
+            - "clear-packaging-caches-and-temporary-package-downloads"
+        
+          label: "no_gem_clean_all"
+          regex: /gem install(?!.+cleanup|.+\rvm cleanup all)/g
+          level: "warn"
+          message: "dnf clean all is not used"
+          description: "the dnf cache will remain in this layer making the layer unnecessarily large"
+          reference_url: 
+            - "https://github.com/projectatomic/container-best-practices/blob/master/creating/creating_index.adoc#"
+            - "clear-packaging-caches-and-temporary-package-downloads" 
           label: "installing_ssh"
           regex: /ssh/
           level: "warn"
@@ -58,7 +87,7 @@
     ENTRYPOINT: 
       paramSyntaxRegex: /.+/
       rules: []
-    VOLUME: 
+    VOLUME:
       paramSyntaxRegex: /.+/
       rules: []
     USER: 
