@@ -19,8 +19,8 @@ it('should allow a valid Dockerfile', function (done) {
         });
 });
 
-it('should exit with code 0 on warning when in permissive mode ', function (done) {
-    var p = exec('./bin/dockerfile_lint  -p -f test/data/dockerfiles/TestLabels -r sample_rules/basic_rules.yaml',
+it('should exit with code 0 on warning when in strict mode ', function (done) {
+    var p = exec('./bin/dockerfile_lint  -p -f test/data/dockerfiles/TestLabels -r test/data/rules/basic.yaml',
         function (err, stdout, stderr) {
         });
     p.on('exit', function (code) {
@@ -31,7 +31,7 @@ it('should exit with code 0 on warning when in permissive mode ', function (done
 });
 
 it('should exit with code 0 on warning when in permissive mode (long form)', function (done) {
-    var p = exec('./bin/dockerfile_lint  --permissive -f test/data/dockerfiles/TestLabels -r sample_rules/basic_rules.yaml',
+    var p = exec('./bin/dockerfile_lint  --permissive -f test/data/dockerfiles/TestLabels -r test/data/rules/basic.yaml',
         function (err, stdout, stderr) {
         });
     p.on('exit', function (code) {
@@ -43,7 +43,7 @@ it('should exit with code 0 on warning when in permissive mode (long form)', fun
 
 
 it('should exit with code 1 on warning when not in permissive mode ', function (done) {
-    var p = exec('./bin/dockerfile_lint -f test/data/dockerfiles/TestLabels -r sample_rules/basic_rules.yaml',
+    var p = exec('./bin/dockerfile_lint -f test/data/dockerfiles/TestLabels -r test/data/rules/basic.yaml',
         function (err, stdout, stderr) {
         });
     p.on('exit', function (code) {
