@@ -8,6 +8,8 @@ var fs = require('fs'),
     commandline = require('commander'),
     logger = require("../lib/logger"),
     config = require('../config/config'),
+    yamlParser = require('js-yaml'),
+    loadRules = require("../lib/rulefile-loader").load,
     DockeFileValidator = require('../');
 
 
@@ -98,11 +100,11 @@ function printJsonResults(results) {
 
 var dockerfileLocation = null;
 var rulefileLocation = null;
-var dockerfile = null;
-var rulefile = null;
+var dockerfile = null ;
+var rulefile = null ;
 var printJson = false;
 var remoteFile = false;
-var permissiveMode = false;
+var strictMode = true;
 
 
 commandline.option('-j, --json', 'Show results in JSON format')
@@ -110,6 +112,7 @@ commandline.option('-j, --json', 'Show results in JSON format')
     .option('-f, --dockerfile [dockerfile] (required)', 'File to lint. Accepts a local file or an http(s) URL', dockerfile)
     .option('-v, --verbose', 'Show debugging logs')
     .option('-p, --permissive', 'Run in permissive mode (return 1 only on error but not on warning)')
+    .option('-e, --export-rules', 'Dump the effective rule file. All other options except -r are ignored.')
     .parse(process.argv);
 
 if (commandline.verbose) {
@@ -121,17 +124,33 @@ if (commandline.json) {
     printJson = true;
 }
 
-if (!commandline.dockerfile) {
+if (!commandline.dockerfile && !commandline.exportRules) {
     commandline.help();
 }
-if (commandline.permissive) {
-    permissiveMode = true;
-}
 
-dockerfileLocation = commandline.dockerfile;
 if (commandline.rulefile) {
     rulefileLocation = commandline.rulefile;
 }
+
+if (rulefileLocation !== null) {
+    if (!fs.existsSync(rulefileLocation)) {
+        console.error('ERROR: Rule file not found -> ' + rulefileLocation);
+        process.exit(1);
+    }
+}
+
+if (commandline.exportRules) {
+    var rules = loadRules(rulefileLocation);
+    console.log(yamlParser.dump(rules));
+    process.exit(0);
+}
+
+if (commandline.permissive) {
+    strictMode = false;
+}
+
+dockerfileLocation = commandline.dockerfile;
+
 
 try {
     dockerfile = fs.readFileSync(dockerfileLocation, 'UTF-8');
@@ -143,12 +162,7 @@ try {
         process.exit(1);
     }
 }
-if (rulefileLocation !== null) {
-    if (!fs.existsSync(rulefileLocation)) {
-        console.error('ERROR: Rule file not found -> ' + rulefileLocation);
-        process.exit(1);
-    }
-}
+
 
 function runValidation(dockerfile, rulefileLocation) {
     var validator = new DockeFileValidator(rulefileLocation);
@@ -159,7 +173,7 @@ function runValidation(dockerfile, rulefileLocation) {
         printResults(results);
     }
 
-    if ((results.error.count > 0) || (!permissiveMode && results.warn.count > 0)) {
+    if ((results.error.count > 0) || (strictMode && results.warn.count > 0)) {
         process.exit(1);
     } else {
         process.exit(0);
