@@ -141,9 +141,6 @@ if (rulefileLocation !== null) {
 
 if (commandline.exportRules) {
     var rules = loadRules(rulefileLocation);
-    if (rules && rules.profiles && rules.profile.includes){
-        delete rules.profile.includes;
-    }
     console.log(yamlParser.dump(rules));
     process.exit(0);
 }
