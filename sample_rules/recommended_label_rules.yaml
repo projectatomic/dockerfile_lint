@@ -19,40 +19,40 @@
              level: "warn"
              required: true
              reference_url:
-               - "https://github.com/projectatomic/container-best-practices/blob/master/creating/creating_index.adoc"
-               - "#recommended-labels-for-your-project"
+               - "http://docs.projectatomic.io/container-best-practices/#"
+               - "_recommended_labels_for_your_project"
            Version:
              valueRegex: /[\d+.\d+]+/
              message: "Label 'Version' is missing or has invalid format"
              level: "warn"
              required: true
              reference_url:
-               - "https://github.com/projectatomic/container-best-practices/blob/master/creating/creating_index.adoc"
-               - "#recommended-labels-for-your-project"
+               - "http://docs.projectatomic.io/container-best-practices/#"
+               - "_recommended_labels_for_your_project"
            Release:
              valueRegex: /[\d+.\d+]+/
              message: "Label 'Release' is missing or has invalid format"
              level: "warn"
              required: true
              reference_url:
-               - "https://github.com/projectatomic/container-best-practices/blob/master/creating/creating_index.adoc"
-               - "#recommended-labels-for-your-project"
+               - "http://docs.projectatomic.io/container-best-practices/#"
+               - "_recommended_labels_for_your_project"
            Architecture:
              valueRegex: /[\w]*[6,8][4,6]|[.]*86[.]*64/
              message: "Label 'Architure' is missing or has invalid format: x86, i386, x86_64"
              level: "warn"
              required: true
              reference_url:
-               - "https://github.com/projectatomic/container-best-practices/blob/master/creating/creating_index.adoc"
-               - "#recommended-labels-for-your-project"
+               - "http://docs.projectatomic.io/container-best-practices/#"
+               - "_recommended_labels_for_your_project"
            Vendor:
              valueRegex: /([\w]+).+/
              message: "Label 'Vendor' is missing or has invalid format"
              level: "warn"
              required: true
              reference_url:
-               - "https://github.com/projectatomic/container-best-practices/blob/master/creating/creating_index.adoc"
-               - "#recommended-labels-for-your-project"
+               - "http://docs.projectatomic.io/container-best-practices/#"
+               - "_recommended_labels_for_your_project"
 
   # The 'required_instructions' lists mandatory instructions
   #
