@@ -11,15 +11,15 @@
         - 
           label: "is_latest_tag"
           regex: /latest/
-          level: "info"
+          level: "error"
           message: "base image uses 'latest' tag"
-          description: "using the 'latest' tag may cause unpredictable builds. It is recommended that a specific tag is used in the FROM line."
+          description: "using the 'latest' tag may cause unpredictable builds. It is recommended that a specific tag is used in the FROM line or *-released which is the latest supported release."
           reference_url: 
             - "https://docs.docker.com/reference/builder/"
             - "#from"
           label: "no_tag"
           regex: /^[:]/
-          level: "warn"
+          level: "error"
           message: "No tag is used"
           description: "lorem ipsum tar"
           reference_url: 
@@ -113,7 +113,7 @@
     - 
       instruction: "MAINTAINER"
       count: 1
-      level: "info"
+      level: "error"
       message: "Maintainer is not defined"
       description: "The MAINTAINER line is useful for identifying the author in the form of MAINTAINER Joe Smith <joe.smith@example.com>"
       reference_url: 
