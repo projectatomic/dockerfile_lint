@@ -3,7 +3,7 @@
     name: "Default"
     description: "Default Profile. Checks basic syntax."
     includes:
-      - recommended_label_rules.yaml 
+      - recommended_label_rules.yaml
   line_rules: 
     FROM: 
       paramSyntaxRegex: /^[a-z0-9./-]+(:[a-z0-9.]+)?$/
@@ -11,15 +11,15 @@
         - 
           label: "is_latest_tag"
           regex: /latest/
-          level: "info"
+          level: "error"
           message: "base image uses 'latest' tag"
-          description: "using the 'latest' tag may cause unpredictable builds. It is recommended that a specific tag is used in the FROM line."
+          description: "using the 'latest' tag may cause unpredictable builds. It is recommended that a specific tag is used in the FROM line or *-released which is the latest supported release."
           reference_url: 
             - "https://docs.docker.com/reference/builder/"
             - "#from"
           label: "no_tag"
           regex: /^[:]/
-          level: "warn"
+          level: "error"
           message: "No tag is used"
           description: "lorem ipsum tar"
           reference_url: 
@@ -38,41 +38,60 @@
           message: "yum clean all is not used"
           description: "the yum cache will remain in this layer making the layer unnecessarily large"
           reference_url: 
-            - "https://github.com/projectatomic/container-best-practices/blob/master/creating/creating_index.adoc#"
-            - "clear-packaging-caches-and-temporary-package-downloads"
-
+            - "http://docs.projectatomic.io/container-best-practices/#"
+            - "_clear_packaging_caches_and_temporary_package_downloads"
+        -
           label: "no_dnf_clean_all"
           regex: /dnf(?!.+clean all|.+\.repo)/g
           level: "warn"
           message: "dnf clean all is not used"
           description: "the dnf cache will remain in this layer making the layer unnecessarily large"
           reference_url: 
-            - "https://github.com/projectatomic/container-best-practices/blob/master/creating/creating_index.adoc#"
-            - "clear-packaging-caches-and-temporary-package-downloads"
- 
+            - "http://docs.projectatomic.io/container-best-practices/#"
+            - "_clear_packaging_caches_and_temporary_package_downloads"
+        -
           label: "no_rvm_cleanup_all"
           regex: /rvm install(?!.+cleanup all)/g
           level: "warn"
           message: "rvm cleanup is not used"
           description: "the rvm cache will remain in this layer making the layer unnecessarily large"
           reference_url: 
-            - "https://github.com/projectatomic/container-best-practices/blob/master/creating/creating_index.adoc#"
-            - "clear-packaging-caches-and-temporary-package-downloads"
-        
+            - "http://docs.projectatomic.io/container-best-practices/#"
+            - "_clear_packaging_caches_and_temporary_package_downloads"
+        -
           label: "no_gem_clean_all"
           regex: /gem install(?!.+cleanup|.+\rvm cleanup all)/g
           level: "warn"
-          message: "dnf clean all is not used"
-          description: "the dnf cache will remain in this layer making the layer unnecessarily large"
+          message: "gem cleanup all is not used"
+          description: "the gem cache will remain in this layer making the layer unnecessarily large"
           reference_url: 
-            - "https://github.com/projectatomic/container-best-practices/blob/master/creating/creating_index.adoc#"
-            - "clear-packaging-caches-and-temporary-package-downloads" 
+            - "http://docs.projectatomic.io/container-best-practices/#"
+            - "_clear_packaging_caches_and_temporary_package_downloads" 
+        -
+          label: "no_apt-get_clean"
+          regex: /apt-get install(?!.+clean)/g
+          level: "warn"
+          message: "apt-get clean is not used"
+          description: "the apt-get cache will remain in this layer making the layer unnecessarily large"
+          reference_url: 
+            - "http://docs.projectatomic.io/container-best-practices/#"
+            - "_clear_packaging_caches_and_temporary_package_downloads" 
+        -
           label: "installing_ssh"
           regex: /ssh/
           level: "warn"
           message: "installing SSH in a container is not recommended"
           description: "Do you really need SSH in this image?"
-          reference_url: "https://github.com/jpetazzo/nsenter"
+          reference_url: "https://github.com/jpetazzo/nsenter"	
+        - 
+          label: "no_ampersand_usage"
+          regex: /\;/
+          level: "warn"
+          message: "using ; instead of && will evaluate each expression regardless of the success of the previous command"
+          description: "RUN do_1 && do_2: The ampersands change the resulting evaluation into do_1 and then do_2 only if do_1 was successful."
+          reference_url:
+            - "http://docs.projectatomic.io/container-best-practices/#"
+            - "#_using_semi_colons_vs_double_ampersands"
     EXPOSE: 
       paramSyntaxRegex: /^[0-9]+([0-9\s]+)?$/
       rules: []
@@ -103,7 +122,7 @@
     - 
       instruction: "MAINTAINER"
       count: 1
-      level: "info"
+      level: "error"
       message: "Maintainer is not defined"
       description: "The MAINTAINER line is useful for identifying the author in the form of MAINTAINER Joe Smith <joe.smith@example.com>"
       reference_url: 
