@@ -40,6 +40,15 @@
           reference_url: 
             - "http://docs.projectatomic.io/container-best-practices/#"
             - "_clear_packaging_caches_and_temporary_package_downloads"
+        - 
+          label: "yum_update_all"
+          regex: /yum(.+update all|.+upgrade|.+update)/g
+          level: "warn"
+          message: "updating the entire base image may add unnecessary size to the container"
+          description: "update the entire base image may add unnecessary size to the container"
+          reference_url: 
+            - "http://docs.projectatomic.io/container-best-practices/#"
+            - "_clear_packaging_caches_and_temporary_package_downloads"
         -
           label: "no_dnf_clean_all"
           regex: /dnf(?!.+clean all|.+\.repo)/g
@@ -76,6 +85,15 @@
           reference_url: 
             - "http://docs.projectatomic.io/container-best-practices/#"
             - "_clear_packaging_caches_and_temporary_package_downloads" 
+        -
+          label: "privileged_run_container"
+          regex: /privileged/
+          level: "warn"
+          message: "a privileged run container is allowed access to host devices"
+          description: "Does this run need to be privileged?"
+          reference_url: 
+            - "http://docs.docker.com/engine/reference/run/#"
+            - "runtime-privilege-and-linux-capabilities"
         -
           label: "installing_ssh"
           regex: /ssh/
