@@ -4,7 +4,8 @@
   "description": "Utility for linting a docker file against accepted good practices",
   "main": "index.js",
   "bin": {
-    "dockerfile_lint": "./bin/dockerfile_lint"
+    "dockerfile_lint": "./bin/dockerfile_lint",
+    "dockerimage_lint": "./bin/dockerfile_lint"
   },
   "scripts": {
     "test": "mocha 'test/**/*spec.js'"
