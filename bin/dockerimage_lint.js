@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-var DockerIO = require("dockerode")
+
 
 
 var fs = require('fs'),
@@ -9,7 +9,8 @@ var fs = require('fs'),
     commandline = require('commander'),
     logger = require("../lib/logger"),
     config = require('../config/config'),
-    DockeFileValidator = require('../');
+    DockerIO = require('dockerode'),
+    Linter = require('../lib/image-linter');
 
 
 
@@ -27,6 +28,19 @@ function printEntry(entry, level) {
 
 }
 
+
+function getRefUrl(url) {
+    var ref_url = "";
+    if (util.isArray(url)) {
+        var base_url = url ? url[0] : "";
+        ref_url = url && url[1] ? base_url +
+        url[1] : base_url;
+    } else {
+        ref_url = (url) ? url : "None";
+    }
+    return ref_url;
+
+}
 
 function printResults(results) {
     var errors = results.error;
@@ -63,19 +77,15 @@ function printJsonResults(results) {
 }
 
 
-var dockerfileLocation = null;
 var rulefileLocation = null;
-var dockerfile = null;
+var imageid = null;
 var rulefile = null;
 var printJson = false;
-var remoteFile = false;
-
-commandline.
 
 
 commandline.option('-j, --json', 'Show results in JSON format')
     .option('-r, --rulefile [rulefile] (optional)', 'Rule file', rulefile)
-    .option('-f, --dockerfile [dockerfile] (required)', 'File to lint. Accepts a local file or an http(s) URL', dockerfile)
+    .option('-i, --imageid [image id] (required)', 'Image to lint. Accepts an image id', imageid)
     .option('-v, --verbose', 'Show debugging logs')
     .parse(process.argv);
 
@@ -88,25 +98,16 @@ if (commandline.json) {
     printJson = true;
 }
 
-if (!commandline.dockerfile) {
+if (!commandline.imageid) {
     commandline.help();
+}else {
+    imageid = commandline.imageid;
 }
 
-dockerfileLocation = commandline.dockerfile;
 if (commandline.rulefile) {
     rulefileLocation = commandline.rulefile;
 }
 
-try {
-    dockerfile = fs.readFileSync(dockerfileLocation, 'UTF-8');
-} catch (e) {
-    if (/^http[s]?:\/\//.test(dockerfileLocation)) {
-        remoteFile = true;
-    } else {
-        console.error('ERROR: Dockerfile not found -> ' + dockerfileLocation);
-        process.exit(1);
-    }
-}
 if (rulefileLocation !== null) {
     if (!fs.existsSync(rulefileLocation)) {
         console.error('ERROR: Rule file not found -> ' + rulefileLocation);
@@ -114,15 +115,14 @@ if (rulefileLocation !== null) {
     }
 }
 
-function runValidation(dockerfile, rulefileLocation) {
-    var validator = new DockeFileValidator(rulefileLocation);
-    var results = validator.validate(dockerfile);
+function runValidation(inspectOutPut, rulefileLocation) {
+    var linter = new Linter(rulefileLocation);
+    var results = linter.validate(inspectOutPut);
     if (printJson) {
         printJsonResults(results);
     } else {
         printResults(results);
     }
-
     if (results.error.count > 0) {
         process.exit(1);
     } else {
@@ -130,11 +130,15 @@ function runValidation(dockerfile, rulefileLocation) {
     }
 }
 
-if (remoteFile) {
-    downloadDockerfile(dockerfileLocation, function (dockerfile) {
-        runValidation(dockerfile, rulefileLocation);
-    });
-} else {
-    runValidation(dockerfile, rulefileLocation);
-}
+var docker = new DockerIO();
+logger.debug("Image id is " + imageid);
+var image = docker.getImage(imageid);
+image.inspect(function (err, data) {
+    if (err) {
+        logger.error("Unable to inspect image : " + imageid);
+        process.exit(1);
+    } else {
+        runValidation(JSON.stringify(data), rulefileLocation);
+    }
+});
 
