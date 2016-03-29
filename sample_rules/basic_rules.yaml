@@ -25,6 +25,14 @@
           reference_url: 
             - "https://docs.docker.com/reference/builder/"
             - "#from"
+          label: "specified_registry"
+          regex: "/[/]/"
+          level: "warn"
+          message: "using a specified registry in the FROM line"
+          description: "using a specified registry may supply invalid or unexpected base images"
+          reference_url:
+            - "https://docs.docker.com/reference/builder/"
+            - "#entrypoint"
     MAINTAINER: 
       paramSyntaxRegex: /.+/
       rules: []
@@ -42,7 +50,7 @@
             - "_clear_packaging_caches_and_temporary_package_downloads"
         - 
           label: "yum_update_all"
-          regex: /yum(.+update all|.+upgrade|.+update)/g
+          regex: /yum(.+update all|.+upgrade|.+update)/
           level: "warn"
           message: "updating the entire base image may add unnecessary size to the container"
           description: "update the entire base image may add unnecessary size to the container"
@@ -105,7 +113,7 @@
           label: "no_ampersand_usage"
           regex: /\;/
           level: "warn"
-          message: "using ; instead of && will evaluate each expression regardless of the success of the previous command"
+          message: "using ; instead of &&"
           description: "RUN do_1 && do_2: The ampersands change the resulting evaluation into do_1 and then do_2 only if do_1 was successful."
           reference_url:
             - "http://docs.projectatomic.io/container-best-practices/#"
