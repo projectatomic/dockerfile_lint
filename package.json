@@ -26,7 +26,7 @@
     "url": "https://github.com/projectatomic/dockerfile_lint/issues"
   },
   "dependencies": {
-    "commander": "~2.5.0",
+    "commander": "~2.9.0",
     "dockerode": "^2.2.9",
     "js-yaml": "~3.2.2",
     "lodash": "^2.4.2",

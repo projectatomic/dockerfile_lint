@@ -90,3 +90,4 @@ function printJsonResults(results) {
 
 module.exports.printResults = printResults;
 module.exports.printJsonResults = printJsonResults;
+module.exports.downloadDockerfile = downloadDockerfile;
