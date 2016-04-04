@@ -3,7 +3,7 @@
 #dockerfile-lint
 
 A rule based 'linter' for [Dockerfiles](https://docs.docker.com/reference/builder/). The linter rules can be used  to check file syntax as well as arbitrary semantic and best practice attributes determined by the rule file writer.
-
+The linter can also be used to check LABEL rules against docker images.
 #Quickstart
 
 1. Change to directory where you have a Dockerfile
@@ -11,15 +11,27 @@ A rule based 'linter' for [Dockerfiles](https://docs.docker.com/reference/builde
   * Atomic CLI
 
             atomic run projectatomic/dockerfile-lint
+            
+            atomic run projectatomic/dockerfile-lint image <imageid>
 
   * Docker CLI
 
             docker run -it --rm --privileged -v `pwd`:/root/ \
                    projectatomic/dockerfile-lint \
-                   dockerfile_lint -f Dockerfile
+                   dockerfile_lint [-f Dockerfile]
+            
+            docker run -it --rm --privileged -v `pwd`:/root/  \
+                   -v /var/run/docker.sock:/var/run/docker.sock \
+                   projectatomic/dockerfile-lint \       
+                   dockerfile_lint  image <imageid>
+            
+            
                    
 By default, the linter runs in strict mode (errors and/or warnings result in non-zero return code). Run the command with '-p'  or '--permissive to
 run in permissive mode:
+
+            atomic run projectatomic/dockerfile-lint -p
+            
             docker run -it --rm --privileged -v `pwd`:/root/ \
                                projectatomic/dockerfile-lint \
                                dockerfile_lint -p -f Dockerfile

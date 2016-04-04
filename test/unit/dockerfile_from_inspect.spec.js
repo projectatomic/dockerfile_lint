@@ -4,15 +4,7 @@ var should = require('should'),
     commandsFromInspect = require('../../lib/inspect-to-dockerfile').commandsFromInspect;
 
 describe('Commands from Inspect function', function () {
-    //User: {command: 'USER', parser: parseUser},
-    //Entrypoint: {command: 'ENTRYPOINT', parser: parseEntryPoint},
-    //Env: {command: 'ENV', parser: parseEnv},
-    //Cmd: {command: 'CMD', parser: parseCmd},
-    //WorkingDir: {command: 'WORKDIR', parser: parseWorkDir},
-    //OnBuild: {command: 'ONBUILD', parser: parseOnBuild},
-    //Labels: {command: 'LABEL', parser: parseLabels},
-    //ExposedPorts: {command: 'EXPOSE', parser: parseExposedPorts},
-    //Author: {command: 'MAINTAINER', parser: parseMaintainer}
+
     it('correctly parses labels', function () {
         var inspect = {
             Config: {
@@ -23,7 +15,7 @@ describe('Commands from Inspect function', function () {
                 }
             }
         };
-        var config = JSON.stringify(inspect, undefined, 2);
+        var config = JSON.stringify(inspect);
         var commands = commandsFromInspect(config);
         commands.length.should.eql(1);
         commands[0].name.should.eql('LABEL');
@@ -31,7 +23,7 @@ describe('Commands from Inspect function', function () {
     });
     it('correctly parses user', function () {
         var inspect ={Config: {"User": "root"}};
-        var config = JSON.stringify(inspect, undefined, 2);
+        var config = JSON.stringify(inspect);
         var commands = commandsFromInspect(config);
         commands.length.should.eql(1);
         commands[0].name.should.eql('USER');
@@ -40,7 +32,7 @@ describe('Commands from Inspect function', function () {
 
     it('correctly parses maintainer', function () {
         var inspect ={Author:"test@example.com"};
-        var config = JSON.stringify(inspect, undefined, 2);
+        var config = JSON.stringify(inspect);
         var commands = commandsFromInspect(config);
         commands.length.should.eql(1);
         commands[0].name.should.eql('MAINTAINER');
