@@ -1,6 +1,6 @@
 {
   "name": "dockerfile_lint",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "description": "Utility for linting a docker file against accepted good practices",
   "main": "index.js",
   "bin": {
@@ -25,7 +25,8 @@
     "url": "https://github.com/projectatomic/dockerfile_lint/issues"
   },
   "dependencies": {
-    "commander": "~2.5.0",
+    "commander": "~2.9.0",
+    "dockerode": "^2.2.9",
     "js-yaml": "~3.2.2",
     "lodash": "^2.4.2",
     "winston": "^2.1.1"
