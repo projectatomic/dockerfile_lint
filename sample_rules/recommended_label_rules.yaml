@@ -13,7 +13,7 @@
        # get more information about the rule.
        #
        defined_namevals:
-           name:
+           Name:
              valueRegex: /([\w]+)./
              message: "Label 'Name' is missing or has invalid format"
              level: "warn"
