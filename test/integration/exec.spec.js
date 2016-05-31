@@ -19,6 +19,20 @@ it('should allow a valid Dockerfile', function (done) {
         });
 });
 
+it('should validate remote (https) Dockerfile', function (done) {
+
+    exec('./bin/dockerfile_lint -f https://raw.githubusercontent.com/projectatomic/dockerfile_lint/master/test/data/dockerfiles/TestLabels',
+        function (err, stdout, stderr) {
+            if (err) {
+                return done(err);
+            }
+            stdout.should.eql('Check passed!' + EOL);
+            stderr.should.eql('');
+            done();
+        });
+});
+
+
 it('should exit with code 0 on warning when in strict mode ', function (done) {
     var p = exec('./bin/dockerfile_lint  -p -f test/data/dockerfiles/TestLabels -r test/data/rules/basic.yaml',
         function (err, stdout, stderr) {
