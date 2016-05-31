@@ -12,7 +12,9 @@ describe('parse function', function () {
         var contents = 'FROM ubuntu:latest\n'
             + '#Comment1\n'
             + 'RUN echo done\n'
-            + 'LABEL RUN docker run -it --rm --privileged -v `pwd`:/root/ \\ \n'
+            + ' \n' //should ignore spaces
+            + 'LABEL RUN docker run -it --rm --privileged -v `pwd`:/root/\\ \n'
+            + '\n' //ignore empty space inside continuation line
             + '#Comment2\n'
             + ' --name NAME -e NAME=NAME -e IMAGE=IMAGE IMAGE dockerfile_lint -f Dockerfile \n'
             + '#Comment3 \n'
