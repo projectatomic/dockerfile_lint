@@ -203,7 +203,7 @@
       paramSyntaxRegex: /.+/
       rules: []
     USER: 
-      paramSyntaxRegex: /^[a-z_][a-z0-9_]{0,30}$/
+      paramSyntaxRegex: /^[a-z0-9_][a-z0-9_]{0,40}$/
       rules: []
     WORKDIR: 
       paramSyntaxRegex: /^~?[A-z0-9\/_.-]+$/
