@@ -1,7 +1,7 @@
 ---
   profile:
-    name: "Openshift"
-    description: "Openshift Profile. Checks basic syntax and Openshift labels."
+    name: "Osbs"
+    description: "Osbs Profile. Checks basic syntax and checks for required BZComponents etc."
     includes:
       #- recommended_label_rules.yaml
   line_rules:
