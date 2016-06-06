@@ -85,7 +85,7 @@
             - "#from"
           label: "no_tag"
           regex: /^[:]/
-          level: "error"
+          level: "warn"
           message: "No tag is used"
           description: "lorem ipsum tar"
           reference_url: 
