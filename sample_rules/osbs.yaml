@@ -49,7 +49,7 @@
                - "_recommended_labels_for_your_project"
            Architecture:
              valueRegex: /[\w]*[6,8][4,6]|[.]*86[.]*64/
-             message: "Label 'Architure' is missing or has invalid format: x86, i386, x86_64"
+             message: "Label 'Architecture' is missing or has invalid format: x86, i386, x86_64"
              level: "error"
              required: true
              reference_url:
