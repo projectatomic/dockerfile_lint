@@ -257,4 +257,31 @@
       reference_url: 
         - "https://docs.docker.com/reference/builder/"
         - "#user"
+    -
+      instruction: "INSTALL"
+      count: 1
+      level: "warn"
+      message: "No 'INSTALL' instruction"
+      description: "The INSTALL process provides information how to run an atomic install for the container"
+      reference_url:
+        - "http://docs.projectatomic.io/container-best-practices/#"
+        - "_recommended_labels_for_your_project"
+    -
+      instruction: "UNINSTALL"
+      count: 1
+      level: "warn"
+      message: "No 'UNINSTALL' instruction"
+      description: "The UNINSTALL process provides information how to run an atomic uninstall for the container and clean up"
+      reference_url:
+        - "http://docs.projectatomic.io/container-best-practices/#"
+        - "_recommended_labels_for_your_project"
+    -
+      instruction: "RUN"
+      count: 1
+      level: "warn"
+      message: "No 'RUN' instruction"
+      description: "The RUN process provides information how to run an atomic container"
+      reference_url:
+        - "http://docs.projectatomic.io/container-best-practices/#"
+        - "_recommended_labels_for_your_project"
 
