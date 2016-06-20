@@ -35,7 +35,7 @@
              valueRegex: /([\w]+.*)./
              message: "Label 'Release' is missing or has invalid format"
              level: "warn"
-             required: true
+             required: false
              reference_url:
                - "http://docs.projectatomic.io/container-best-practices/#"
                - "_recommended_labels_for_your_project"
@@ -59,7 +59,7 @@
              valueRegex: /([\w]+).+/
              message: "Label 'Url' is missing or has invalid format"
              level: "warn"
-             required: true
+             required: false
              reference_url:
                - "http://docs.projectatomic.io/container-best-practices/#"
                - "_recommended_labels_for_your_project"
@@ -67,7 +67,7 @@
              valueRegex: /([\w]+).+/
              message: "Label 'Help' is missing or has invalid format"
              level: "warn"
-             required: true
+             required: false
              reference_url:
                - "http://docs.projectatomic.io/container-best-practices/#"
                - "_recommended_labels_for_your_project"
@@ -93,8 +93,8 @@
             - "https://docs.docker.com/reference/builder/"
             - "#from"
           label: "specified_registry"
-          regex: "/[/]/"
-          level: "warn"
+          regex: /[a-zA-Z0-9]+?\.[a-zA-Z0-9-]+(\:|\.)([a-zA-Z0-9.]+|(\d+)?)([/?:].*)?/
+          level: "info"
           message: "using a specified registry in the FROM line"
           description: "using a specified registry may supply invalid or unexpected base images"
           reference_url:
@@ -154,7 +154,7 @@
         -
           label: "no_apt-get_clean"
           regex: /apt-get install(?!.+clean)/g
-          level: "warn"
+          level: "info"
           message: "apt-get clean is not used"
           description: "the apt-get cache will remain in this layer making the layer unnecessarily large"
           reference_url: 
@@ -178,8 +178,8 @@
           reference_url: "https://github.com/jpetazzo/nsenter"	
         - 
           label: "no_ampersand_usage"
-          regex: /\;/
-          level: "warn"
+          regex: / ; /
+          level: "info"
           message: "using ; instead of &&"
           description: "RUN do_1 && do_2: The ampersands change the resulting evaluation into do_1 and then do_2 only if do_1 was successful."
           reference_url:
@@ -196,7 +196,7 @@
     COPY: 
       paramSyntaxRegex: /.+/
       rules: []
-    ENTRYPOINT: 
+    ENTRYPOINT:
       paramSyntaxRegex: /.+/
       rules: []
     VOLUME:
@@ -215,7 +215,7 @@
     - 
       instruction: "MAINTAINER"
       count: 1
-      level: "error"
+      level: "info"
       message: "Maintainer is not defined"
       description: "The MAINTAINER line is useful for identifying the author in the form of MAINTAINER Joe Smith <joe.smith@example.com>"
       reference_url: 
@@ -231,15 +231,6 @@
         - "https://docs.docker.com/reference/builder/"
         - "#expose"
     - 
-      instruction: "ENTRYPOINT"
-      count: 1
-      level: "info"
-      message: "There is no 'ENTRYPOINT' instruction"
-      description: "None"
-      reference_url: 
-        - "https://docs.docker.com/reference/builder/"
-        - "#entrypoint"
-    - 
       instruction: "CMD"
       count: 1
       level: "info"
@@ -248,13 +239,3 @@
       reference_url: 
         - "https://docs.docker.com/reference/builder/"
         - "#cmd"
-    - 
-      instruction: "USER"
-      count: 1
-      level: "warn"
-      message: "No 'USER' instruction"
-      description: "The process(es) within the container may run as root and RUN instructions my be run as root"
-      reference_url: 
-        - "https://docs.docker.com/reference/builder/"
-        - "#user"
-

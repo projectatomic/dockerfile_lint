@@ -6,12 +6,14 @@
 
 # Pull base image.
 FROM dockerfile/ubuntu
-
+MAINTAINER ubuntu
 # Install Nginx.
+
 RUN \
   add-apt-repository -y ppa:nginx/stable &amp;&amp; \
   apt-get update &amp;&amp; \
   apt-get install -y nginx &amp;&amp; \
+  apt-get clean; \
   rm -rf /var/lib/apt/lists/* &amp;&amp; \
   echo &quot;\ndaemon off;&quot; &gt;&gt; /etc/nginx/nginx.conf &amp;&amp; \
   chown -R www-data:www-data /var/lib/nginx
@@ -29,7 +31,7 @@ CMD ["nginx"]
 EXPOSE 80
 EXPOSE 443
 
-LABEL VendorID=12345 Authoritative_Registry="registry.redhat.com"  "custom"="customLabel" BZComponent='1234ff' \
+LABEL VendorID=12345 Vendor=ubuntu Version=1.0 Architecture=x64 Name=nginx Authoritative_Registry="registry.redhat.com"  "custom"="customLabel" BZComponent='1234ff' \
       grade=7 \
 #comment is this
       side=4

@@ -93,7 +93,7 @@
             - "https://docs.docker.com/reference/builder/"
             - "#from"
           label: "specified_registry"
-          regex: "/[/]/"
+          regex: /[a-zA-Z0-9]+?\.[a-zA-Z0-9-]+(\:|\.)([a-zA-Z0-9.]+|(\d+)?)([/?:].*)?/
           level: "warn"
           message: "using a specified registry in the FROM line"
           description: "using a specified registry may supply invalid or unexpected base images"
@@ -178,7 +178,7 @@
           reference_url: "https://github.com/jpetazzo/nsenter"	
         - 
           label: "no_ampersand_usage"
-          regex: /\;/
+          regex: / ; /
           level: "warn"
           message: "using ; instead of &&"
           description: "RUN do_1 && do_2: The ampersands change the resulting evaluation into do_1 and then do_2 only if do_1 was successful."
