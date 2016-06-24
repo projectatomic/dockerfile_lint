@@ -21,7 +21,7 @@ it('should allow a valid Dockerfile', function (done) {
 
 it('should validate remote (https) Dockerfile', function (done) {
 
-    exec('./bin/dockerfile_lint -f https://raw.githubusercontent.com/projectatomic/dockerfile_lint/master/test/data/dockerfiles/TestLabels',
+    exec('./bin/dockerfile_lint -f -r config/base_rules.yaml https://raw.githubusercontent.com/projectatomic/dockerfile_lint/master/test/data/dockerfiles/TestLabels',
         function (err, stdout, stderr) {
             if (err) {
                 return done(err);
