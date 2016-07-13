@@ -16,7 +16,7 @@
        #
        defined_namevals:
            Name:
-             valueRegex: /([\w]+)./
+             valueRegex: /[\w]+/
              message: "Label 'Name' is missing or has invalid format"
              level: "warn"
              required: true
@@ -24,7 +24,7 @@
                - "http://docs.projectatomic.io/container-best-practices/#"
                - "_recommended_labels_for_your_project"
            Version:
-             valueRegex: /([\w]+.*)./
+             valueRegex:  /[\w.${}()"'\\\/~<>\-?\%:]+/
              message: "Label 'Version' is missing or has invalid format"
              level: "warn"
              required: true
@@ -32,7 +32,7 @@
                - "http://docs.projectatomic.io/container-best-practices/#"
                - "_recommended_labels_for_your_project"
            Release:
-             valueRegex: /([\w]+.*)./
+             valueRegex:  /[\w.${}()"'\\\/~<>\-?\%:]+/
              message: "Label 'Release' is missing or has invalid format"
              level: "warn"
              required: false
@@ -42,8 +42,8 @@
            Architecture:
              valueRegex: /[\w]*[6,8][4,6]|[.]*86[.]*64/
              message: "Label 'Architecture' is missing or has invalid format: x86, i386, x86_64"
-             level: "warn"
-             required: true
+             level: "info"
+             required: false
              reference_url:
                - "http://docs.projectatomic.io/container-best-practices/#"
                - "_recommended_labels_for_your_project"
@@ -51,7 +51,7 @@
              valueRegex: /([\w]+).+/
              message: "Label 'Vendor' is missing or has invalid format"
              level: "warn"
-             required: true
+             required: false
              reference_url:
                - "http://docs.projectatomic.io/container-best-practices/#"
                - "_recommended_labels_for_your_project"
@@ -73,7 +73,7 @@
                - "_recommended_labels_for_your_project"
 
     FROM: 
-      paramSyntaxRegex: /^[a-z0-9./-]+(:[a-z0-9.]+)?(-[a-z0-9]+)?$/
+      paramSyntaxRegex: /^[\w./-]+(:[\w.]+)?(-[\w]+)?$/
       rules: 
         - 
           label: "is_latest_tag"
@@ -93,7 +93,7 @@
             - "https://docs.docker.com/reference/builder/"
             - "#from"
           label: "specified_registry"
-          regex: /[a-zA-Z0-9]+?\.[a-zA-Z0-9-]+(\:|\.)([a-zA-Z0-9.]+|(\d+)?)([/?:].*)?/
+          regex: /[\w]+?\.[\w-]+(\:|\.)([\w.]+|(\d+)?)([/?:].*)?/
           level: "info"
           message: "using a specified registry in the FROM line"
           description: "using a specified registry may supply invalid or unexpected base images"
@@ -108,7 +108,7 @@
       rules: 
         - 
           label: "no_yum_clean_all"
-          regex: /yum(?!.+clean all|.+\.repo)/g
+          regex: /yum(?!.+clean all|.+\.repo|-config|\.conf)/g
           level: "warn"
           message: "yum clean all is not used"
           description: "the yum cache will remain in this layer making the layer unnecessarily large"
@@ -118,7 +118,7 @@
         - 
           label: "yum_update_all"
           regex: /yum(.+update all|.+upgrade|.+update)/
-          level: "warn"
+          level: "info"
           message: "updating the entire base image may add unnecessary size to the container"
           description: "update the entire base image may add unnecessary size to the container"
           reference_url: 
@@ -171,7 +171,7 @@
             - "runtime-privilege-and-linux-capabilities"
         -
           label: "installing_ssh"
-          regex: /ssh/
+          regex: /openssh-server/
           level: "warn"
           message: "installing SSH in a container is not recommended"
           description: "Do you really need SSH in this image?"
@@ -186,13 +186,13 @@
             - "http://docs.projectatomic.io/container-best-practices/#"
             - "#_using_semi_colons_vs_double_ampersands"
     EXPOSE: 
-      paramSyntaxRegex: /[0-9]+([0-9\s|-]+)?/
+      paramSyntaxRegex: /^[\d-\s\w/\\]+$/
       rules: []
     ENV: 
-      paramSyntaxRegex: /^[a-zA-Z_]+[a-zA-Z0-9_]* .+$/
+      paramSyntaxRegex: /^[\w-$/\\=\"[\]{}@:,`\t. ]+$/
       rules: []
     ADD: 
-      paramSyntaxRegex: /^(~?[A-z0-9\/_.-]+|https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))\s~?[A-z0-9\/_.-]+$/
+      paramSyntaxRegex: /^~?([\w-.~:/?#\[\]\\\/*@!$&'()*+,;=.{}"]+[\s]*)+$/
     COPY: 
       paramSyntaxRegex: /.+/
       rules: []
@@ -206,7 +206,7 @@
       paramSyntaxRegex: /^[a-z0-9_][a-z0-9_]{0,40}$/
       rules: []
     WORKDIR: 
-      paramSyntaxRegex: /^~?[A-z0-9\/_.-]+$/
+      paramSyntaxRegex: /^~?[\w\d-\/.{}$\/:]+[\s]*$/
       rules: []
     ONBUILD: 
       paramSyntaxRegex: /.+/
