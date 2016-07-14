@@ -189,7 +189,7 @@
       paramSyntaxRegex: /^[\d-\s\w/\\]+$/
       rules: []
     ENV: 
-      paramSyntaxRegex: /^[\w-$/\\=\"[\]{}@:,`\t. ]+$/
+      paramSyntaxRegex: /^[\w-$/\\=\"[\]{}@:,'`\t. ]+$/
       rules: []
     ADD: 
       paramSyntaxRegex: /^~?([\w-.~:/?#\[\]\\\/*@!$&'()*+,;=.{}"]+[\s]*)+$/
