@@ -12,7 +12,7 @@ line_rules:
           - "https://docs.docker.com/reference/builder/"
           - "#from"
         required: true
-        valueRegex: /^\d+$/
+        valueRegex: /^[\d.]+$/
     paramSyntaxRegex: /.+/
   LABEL:
     defined_namevals:
