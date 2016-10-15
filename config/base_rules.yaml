@@ -20,6 +20,7 @@
       - "WORKDIR"
       - "ONBUILD"
       - "ARG"
+      - "SHELL"
       - "STOPSIGNAL"
     ignore_regex: /^#/
     multiline_regex: /\\$/
@@ -34,6 +35,9 @@
       paramSyntaxRegex: /.+/
       rules: []
     RUN:
+      paramSyntaxRegex: /.+/
+      rules: []
+    SHELL:
       paramSyntaxRegex: /.+/
       rules: []
     CMD:
