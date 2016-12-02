@@ -64,11 +64,19 @@
         }
       ]
     },
+    "HEALTHCHECK": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
     "MAINTAINER": {
       "paramSyntaxRegex": "/.+/",
       "rules": []
     },
     "RUN": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
+    "SHELL": {
       "paramSyntaxRegex": "/.+/",
       "rules": []
     },

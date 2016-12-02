@@ -75,6 +75,10 @@
         }
       ]
     },
+    "HEALTHCHECK": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
     "MAINTAINER": {
       "paramSyntaxRegex": "/.+/",
       "rules": []
@@ -99,6 +103,10 @@
           "reference_url": "https://github.com/jpetazzo/nsenter"
         }
       ]
+    },
+    "SHELL": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
     },
     "CMD": {
       "paramSyntaxRegex": "/.+/",
