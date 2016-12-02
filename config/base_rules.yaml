@@ -21,6 +21,8 @@
       - "ONBUILD"
       - "ARG"
       - "STOPSIGNAL"
+      - "HEALTHCHECK"
+      - "SHELL"
     ignore_regex: /^#/
     multiline_regex: /\\$/
   line_rules:
