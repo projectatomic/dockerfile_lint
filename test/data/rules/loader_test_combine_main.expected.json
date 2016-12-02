@@ -25,7 +25,9 @@
       "WORKDIR",
       "ONBUILD",
       "ARG",
-      "STOPSIGNAL"
+      "STOPSIGNAL",
+      "HEALTHCHECK",
+      "SHELL"
     ],
     "ignore_regex": "/^#/",
     "multiline_regex": "/\\\\$/"
@@ -62,11 +64,19 @@
         }
       ]
     },
+    "HEALTHCHECK": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
     "MAINTAINER": {
       "paramSyntaxRegex": "/.+/",
       "rules": []
     },
     "RUN": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
+    "SHELL": {
       "paramSyntaxRegex": "/.+/",
       "rules": []
     },

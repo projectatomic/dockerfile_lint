@@ -25,7 +25,9 @@
       "WORKDIR",
       "ONBUILD",
       "ARG",
-      "STOPSIGNAL"
+      "STOPSIGNAL",
+      "HEALTHCHECK",
+      "SHELL"
     ],
     "ignore_regex": "/^#/",
     "multiline_regex": "/\\\\$/"
@@ -73,6 +75,10 @@
         }
       ]
     },
+    "HEALTHCHECK": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
+    },
     "MAINTAINER": {
       "paramSyntaxRegex": "/.+/",
       "rules": []
@@ -97,6 +103,10 @@
           "reference_url": "https://github.com/jpetazzo/nsenter"
         }
       ]
+    },
+    "SHELL": {
+      "paramSyntaxRegex": "/.+/",
+      "rules": []
     },
     "CMD": {
       "paramSyntaxRegex": "/.+/",
