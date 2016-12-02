@@ -25,7 +25,9 @@
       "WORKDIR",
       "ONBUILD",
       "ARG",
-      "STOPSIGNAL"
+      "STOPSIGNAL",
+      "HEALTHCHECK",
+      "SHELL"
     ],
     "ignore_regex": "/^#/",
     "multiline_regex": "/\\\\$/"
