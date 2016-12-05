@@ -203,7 +203,7 @@
       paramSyntaxRegex: /.+/
       rules: []
     USER: 
-      paramSyntaxRegex: /^[a-z0-9_][a-z0-9_-]{0,40}$/
+      paramSyntaxRegex: /c^[a-z0-9_][a-z0-9_-]{0,40}$/
       rules: []
     WORKDIR: 
       paramSyntaxRegex: /^~?[\w\d-\/.{}$\/:]+[\s]*$/
@@ -212,15 +212,6 @@
       paramSyntaxRegex: /.+/
       rules: []
   required_instructions: 
-    - 
-      instruction: "MAINTAINER"
-      count: 1
-      level: "info"
-      message: "Maintainer is not defined"
-      description: "The MAINTAINER line is useful for identifying the author in the form of MAINTAINER Joe Smith <joe.smith@example.com>"
-      reference_url: 
-        - "https://docs.docker.com/reference/builder/"
-        - "#maintainer"
     - 
       instruction: "EXPOSE"
       count: 1
