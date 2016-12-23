@@ -92,14 +92,6 @@
           reference_url: 
             - "https://docs.docker.com/reference/builder/"
             - "#from"
-          label: "specified_registry"
-          regex: /[\w]+?\.[\w-]+(\:|\.)([\w.]+|(\d+)?)([/?:].*)?/
-          level: "info"
-          message: "using a specified registry in the FROM line"
-          description: "using a specified registry may supply invalid or unexpected base images"
-          reference_url:
-            - "https://docs.docker.com/reference/builder/"
-            - "#entrypoint"
     MAINTAINER: 
       paramSyntaxRegex: /.+/
       rules: []
