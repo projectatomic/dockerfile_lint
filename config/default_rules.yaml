@@ -19,7 +19,7 @@
              valueRegex: /[\w]+/
              message: "Label 'Name' is missing or has invalid format"
              level: "warn"
-             required: true
+             required: false
              reference_url:
                - "http://docs.projectatomic.io/container-best-practices/#"
                - "_recommended_labels_for_your_project"
@@ -27,7 +27,7 @@
              valueRegex:  /[\w.${}()"'\\\/~<>\-?\%:]+/
              message: "Label 'Version' is missing or has invalid format"
              level: "warn"
-             required: true
+             required: false
              reference_url:
                - "http://docs.projectatomic.io/container-best-practices/#"
                - "_recommended_labels_for_your_project"
