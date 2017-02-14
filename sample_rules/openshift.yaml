@@ -25,15 +25,15 @@
                - "defining-image-metadata" 
            'io.openshift.wants':
              valueRegex: /([\w]+)./
-             message: "Label 'io.openshift.tags' is missing or has invalid format"
+             message: "Label 'io.openshift.wants' is missing or has invalid format"
              level: "warn"
              required: true
              reference_url:
                - "http://docs.openshift.org/latest/creating_images/metadata.html#"
                - "defining-image-metadata" 
-           'io.k8s.description':
+           'io.openshift.description':
              valueRegex: /([\w]+)./
-             message: "Label 'io.openshift.tags' is missing or has invalid format"
+             message: "Label 'io.openshift.description' is missing or has invalid format"
              level: "warn"
              required: true
              reference_url:
@@ -41,7 +41,7 @@
                - "defining-image-metadata" 
            'io.openshift.expose-services':
              valueRegex: /([\w:-]+)./
-             message: "Label 'io.openshift.tags' is missing or has invalid format"
+             message: "Label 'io.openshift.expose-services' is missing or has invalid format"
              level: "warn"
              required: true
              reference_url:
@@ -49,7 +49,7 @@
                - "defining-image-metadata" 
            'io.openshift.non-scalable':
              valueRegex: /([\w]+)./
-             message: "Label 'io.openshift.tags' is missing or has invalid format"
+             message: "Label 'io.openshift.non-scalable' is missing or has invalid format"
              level: "warn"
              required: true
              reference_url:
@@ -57,7 +57,7 @@
                - "defining-image-metadata" 
            'io.openshift.min-memory':
              valueRegex: /([\w]+)./
-             message: "Label 'io.openshift.tags' is missing or has invalid format"
+             message: "Label 'io.openshift.min-memory' is missing or has invalid format"
              level: "warn"
              required: true
              reference_url:
@@ -65,7 +65,7 @@
                - "defining-image-metadata" 
            'io.openshift.min-cpu':
              valueRegex: /([\w]+)./
-             message: "Label 'io.openshift.tags' is missing or has invalid format"
+             message: "Label 'io.openshift.min-cpu' is missing or has invalid format"
              level: "warn"
              required: true
              reference_url:
@@ -92,7 +92,7 @@
             - "https://docs.docker.com/reference/builder/"
             - "#from"
           label: "specified_registry"
-          regex: "/[\w]+?\.[\w-]+(\:|\.)([\w.]+|(\d+)?)([/?:].*)?/"
+          regex: /[\w]+?\.[\w-]+(\:|\.)([\w.]+|(\d+)?)([/?:].*)?/
           level: "warn"
           message: "using a specified registry in the FROM line"
           description: "using a specified registry may supply invalid or unexpected base images"
