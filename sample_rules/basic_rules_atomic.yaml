@@ -24,7 +24,7 @@
                - "http://docs.projectatomic.io/container-best-practices/#"
                - "_recommended_labels_for_your_project"
            Version:
-             valueRegex: "/[\w.${}()"'\\\/~<>\-?\%:]+/"
+             valueRegex: /[\w.${}()"'\\\/~<>\-?\%:]+/
              message: "Label 'Version' is missing or has invalid format"
              level: "warn"
              required: true
@@ -32,7 +32,7 @@
                - "http://docs.projectatomic.io/container-best-practices/#"
                - "_recommended_labels_for_your_project"
            Release:
-             valueRegex: "/[\w.${}()"'\\\/~<>\-?\%:]+/"
+             valueRegex: /[\w.${}()"'\\\/~<>\-?\%:]+/
              message: "Label 'Release' is missing or has invalid format"
              level: "warn"
              required: true
@@ -93,7 +93,7 @@
             - "https://docs.docker.com/reference/builder/"
             - "#from"
           label: "specified_registry"
-          regex: "/[\w]+?\.[\w-]+(\:|\.)([\w.]+|(\d+)?)([/?:].*)?/"
+          regex: /[\w]+?\.[\w-]+(\:|\.)([\w.]+|(\d+)?)([/?:].*)?/
           level: "warn"
           message: "using a specified registry in the FROM line"
           description: "using a specified registry may supply invalid or unexpected base images"
