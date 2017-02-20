@@ -15,6 +15,7 @@
        # get more information about the rule.
        #
        defined_namevals:
+         -
            'io.openshift.tags':
              valueRegex: /([\w]+)./
              message: "Label 'io.openshift.tags' is missing or has invalid format"
