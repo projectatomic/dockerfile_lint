@@ -17,7 +17,7 @@
             message: "From profile B"
             description: "using the 'latest' tag may cause unpredictable builds. It is recommended that a specific tag is used in the FROM line."
             reference_url:
-              - "https://docs.docker.com/reference/builder/"
+              - "https://docs.docker.com/engine/reference/builder/"
               - "#from"
   required_instructions:
       -
@@ -27,5 +27,5 @@
         message: "From C"
         description: "From C"
         reference_url:
-          - "https://docs.docker.com/reference/builder/"
+          - "https://docs.docker.com/engine/reference/builder/"
           - "#expose"

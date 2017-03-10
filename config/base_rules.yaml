@@ -3,7 +3,7 @@
     name: "Default"
     description: "Default Profile. Checks basic syntax."
   general:
-    ref_url_base: "https://docs.docker.com/reference/builder/"
+    ref_url_base: "https://docs.docker.com/engine/reference/builder/"
     valid_instructions:
       - "FROM"
       - "MAINTAINER"

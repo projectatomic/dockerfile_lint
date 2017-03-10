@@ -66,6 +66,6 @@
    #   message: "No LABELs are defined"
    #   description: "Labels are needed because...."
    #   reference_url:
-   #     - "https://docs.docker.com/reference/builder/"
+   #     - "https://docs.docker.com/engine/reference/builder/"
    #     - "#label"
 
