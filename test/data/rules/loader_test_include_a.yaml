@@ -29,5 +29,5 @@
       message: "From file A"
       description: "From profile A"
       reference_url: 
-        - "https://docs.docker.com/reference/builder/"
+        - "https://docs.docker.com/engine/reference/builder/"
         - "#maintainer"

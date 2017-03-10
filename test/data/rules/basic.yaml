@@ -13,7 +13,7 @@
           message: "base image uses 'latest' tag"
           description: "using the 'latest' tag may cause unpredictable builds. It is recommended that a specific tag is used in the FROM line."
           reference_url:
-            - "https://docs.docker.com/reference/builder/"
+            - "https://docs.docker.com/engine/reference/builder/"
             - "#from"
         -
           label: "no_tag"
@@ -22,7 +22,7 @@
           message: "No tag is used"
           description: "lorem ipsum tar"
           reference_url:
-            - "https://docs.docker.com/reference/builder/"
+            - "https://docs.docker.com/engine/reference/builder/"
             - "#from"
     MAINTAINER:
       paramSyntaxRegex: /.+/
@@ -78,7 +78,7 @@
       message: "Maintainer is not defined"
       description: "The MAINTAINER line is useful for identifying the author in the form of MAINTAINER Joe Smith <joe.smith@example.com>"
       reference_url:
-        - "https://docs.docker.com/reference/builder/"
+        - "https://docs.docker.com/engine/reference/builder/"
         - "#maintainer"
     -
       instruction: "EXPOSE"
@@ -87,7 +87,7 @@
       message: "There is no 'EXPOSE' instruction"
       description: "Without exposed ports how will the service of the container be accessed?"
       reference_url:
-        - "https://docs.docker.com/reference/builder/"
+        - "https://docs.docker.com/engine/reference/builder/"
         - "#expose"
     -
       instruction: "ENTRYPOINT"
@@ -96,7 +96,7 @@
       message: "There is no 'ENTRYPOINT' instruction"
       description: "None"
       reference_url:
-        - "https://docs.docker.com/reference/builder/"
+        - "https://docs.docker.com/engine/reference/builder/"
         - "#entrypoint"
     -
       instruction: "CMD"
@@ -105,7 +105,7 @@
       message: "There is no 'CMD' instruction"
       description: "None"
       reference_url:
-        - "https://docs.docker.com/reference/builder/"
+        - "https://docs.docker.com/engine/reference/builder/"
         - "#cmd"
     -
       instruction: "USER"
@@ -114,5 +114,5 @@
       message: "No 'USER' instruction"
       description: "The process(es) within the container may run as root and RUN instructions my be run as root"
       reference_url:
-        - "https://docs.docker.com/reference/builder/"
+        - "https://docs.docker.com/engine/reference/builder/"
         - "#user"

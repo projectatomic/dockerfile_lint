@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/projectatomic/dockerfile_lint.svg?branch=master)](https://travis-ci.org/projectatomic/dockerfile_lint)
 #dockerfile-lint
 
-A rule based 'linter' for [Dockerfiles](https://docs.docker.com/reference/builder/). The linter rules can be used  to check file syntax as well as arbitrary semantic and best practice attributes determined by the rule file writer.
+A rule based 'linter' for [Dockerfiles](https://docs.docker.com/engine/reference/builder/). The linter rules can be used  to check file syntax as well as arbitrary semantic and best practice attributes determined by the rule file writer.
 The linter can also be used to check LABEL rules against docker images.
 #Quickstart
 
@@ -80,7 +80,7 @@ line_rules:
           message: "base image uses 'latest' tag"
           description: "using the 'latest' tag may cause unpredictable builds. It is recommended that a specific tag is used in the FROM line."
           reference_url: 
-            - "https://docs.docker.com/reference/builder/"
+            - "https://docs.docker.com/engine/reference/builder/"
             - "#from"
         - 
           label: "no_tag"
@@ -90,7 +90,7 @@ line_rules:
           message: "No tag is used"
           description: "No tag is used"
           reference_url: 
-            - "https://docs.docker.com/reference/builder/"
+            - "https://docs.docker.com/engine/reference/builder/"
             - "#from"
         - 
           label: "from_not_redhat"

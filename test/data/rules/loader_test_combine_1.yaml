@@ -13,7 +13,7 @@
             message: "From rule 1"
             description: "FROM from profile 1"
             reference_url:
-              - "https://docs.docker.com/reference/builder/"
+              - "https://docs.docker.com/engine/reference/builder/"
               - "#from"
       LABEL:
         paramSyntaxRegex: /file1/
@@ -24,7 +24,7 @@
                   level: "error"
                   required: 'recommended'
                   reference_url:
-                    - "https://docs.docker.com/reference/builder/"
+                    - "https://docs.docker.com/engine/reference/builder/"
                     - "#from"
                Authoritative_Registry:
                  valueRegex: /.+/
@@ -32,7 +32,7 @@
                  level: "error"
                  required: true
                  reference_url:
-                   - "https://docs.docker.com/reference/builder/"
+                   - "https://docs.docker.com/engine/reference/builder/"
                    - "#from"
         rules:
           -
@@ -42,7 +42,7 @@
             message: "LABEL from profile 1"
             description: "LABEL from profile 1"
             reference_url:
-              - "https://docs.docker.com/reference/builder/"
+              - "https://docs.docker.com/engine/reference/builder/"
               - "#from"
   required_instructions:
       -
@@ -52,5 +52,5 @@
         message: "From combine 1"
         description: "From combine 1"
         reference_url:
-          - "https://docs.docker.com/reference/builder/"
+          - "https://docs.docker.com/engine/reference/builder/"
           - "#env"
