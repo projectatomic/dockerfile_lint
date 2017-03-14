@@ -16,7 +16,7 @@
        #
        defined_namevals:
            BZComponent:
-             valueRegex: [\w.\/\\:-]+ 
+             valueRegex: /([\w.\/\\:-]+)/ 
              message: "Label 'BZComponent' is missing or has invalid format"
              level: "error"
              required: true
