@@ -12,6 +12,12 @@ ADD . .
 RUN npm install && \
     ln -s /opt/dockerfile_lint/bin/dockerfile_lint /usr/bin/dockerfile_lint
 
+RUN mkdir /sample_rules  && \
+    cp sample_rules/basic_rules_atomic.yaml  sample_rules/basic_rules.yaml  sample_rules/label_rules.yaml  \
+       sample_rules/openshift.yaml  sample_rules/osbs.yaml  sample_rules/recommended_label_rules.yaml \
+       sample_rules/default_rules.yaml /sample_rules
+
+
 WORKDIR /root/
 LABEL RUN docker run -it --rm --privileged -v `pwd`:/root/ -v /var/run/docker.sock:/var/run/docker.sock --name NAME -e NAME=NAME -e IMAGE=IMAGE IMAGE dockerfile_lint
 
