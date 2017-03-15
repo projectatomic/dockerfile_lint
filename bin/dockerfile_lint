@@ -3,6 +3,7 @@
 'use strict';
 
 var fs = require('fs'),
+    yamlParser = require('js-yaml'),
     commandline = require('commander'),
     logger = require("../lib/logger"),
     loadRules = require("../lib/rulefile-loader").load,
