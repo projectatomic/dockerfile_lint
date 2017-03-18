@@ -84,6 +84,7 @@
           reference_url: 
             - "https://docs.docker.com/engine/reference/builder/"
             - "#from"
+        - 
           label: "no_tag"
           regex: /^[:]/
           level: "error"
@@ -92,6 +93,7 @@
           reference_url: 
             - "https://docs.docker.com/engine/reference/builder/"
             - "#from"
+        - 
           label: "specified_registry"
           regex: /[a-zA-Z0-9]+?\.[a-zA-Z0-9-]+(\:|\.)([a-zA-Z0-9.]+|(\d+)?)([/?:].*)?/
           level: "warn"

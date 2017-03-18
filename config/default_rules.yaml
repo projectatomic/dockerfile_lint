@@ -84,6 +84,7 @@
           reference_url: 
             - "https://docs.docker.com/engine/reference/builder/"
             - "#from"
+        - 
           label: "no_tag"
           regex: /^[:]/
           level: "error"
