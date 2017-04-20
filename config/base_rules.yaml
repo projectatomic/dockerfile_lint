@@ -20,6 +20,7 @@
       - "WORKDIR"
       - "ONBUILD"
       - "ARG"
+      - "SHELL"
       - "STOPSIGNAL"
       - "HEALTHCHECK"
       - "SHELL"
