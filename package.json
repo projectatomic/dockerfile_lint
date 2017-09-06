@@ -7,7 +7,7 @@
     "dockerfile_lint": "./bin/dockerfile_lint"
   },
   "scripts": {
-    "test": "mocha 'test/**/*spec.js'"
+    "test": "mocha test/**/*spec.js"
   },
   "repository": {
     "type": "git",
