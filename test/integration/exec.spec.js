@@ -14,7 +14,7 @@ it('should allow a valid Dockerfile', function (done) {
             if (err) {
                 return done(err);
             }
-            stdout.trim().should.eql('Check passed!');
+            stdout.trim().should.eql('# Analyzing ./test/data/dockerfiles/TestLabels\n\nCheck passed!');
             stderr.should.eql('');
             done();
         });
@@ -22,12 +22,12 @@ it('should allow a valid Dockerfile', function (done) {
 
 it('should validate remote (https) Dockerfile', function (done) {
 
-    exec('node ' + binScript + ' -f -r config/base_rules.yaml https://raw.githubusercontent.com/projectatomic/dockerfile_lint/master/test/data/dockerfiles/TestLabels',
+    exec('node ' + binScript + ' -r config/base_rules.yaml -f https://raw.githubusercontent.com/projectatomic/dockerfile_lint/master/test/data/dockerfiles/TestLabels',
         function (err, stdout, stderr) {
             if (err) {
                 return done(err);
             }
-            stdout.trim().should.eql('Check passed!');
+            stdout.trim().should.eql('# Analyzing https://raw.githubusercontent.com/projectatomic/dockerfile_lint/master/test/data/dockerfiles/TestLabels\n\nCheck passed!');
             stderr.should.eql('');
             done();
         });
