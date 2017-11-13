@@ -35,24 +35,23 @@ function isRedirect(statusCode) {
     return (statusCode === 300 || statusCode === 301 || statusCode === 302);
 }
 
-function downloadDockerfile(url, cb) {
-    var proto, dockerfile = '';
-    if (url.match('^https://')) {
-        proto = require('https');
-    } else {
-        proto = require('http');
-    }
-    proto.get(url, function (res) {
-        res.on('data', function (data) {
-            dockerfile += data;
-        }).on('end', function () {
-            if (isRedirect(res.statusCode) && res.headers.location) {
-                return downloadDockerfile(res.headers.location, cb);
+function getContent(url) {
+    return new Promise(function (resolve, reject) {
+        var lib = url.startsWith('https') ? require('https') : require('http');
+        var request = lib.get(url, function (response) {
+            if (isRedirect(response.statusCode) && response.headers.location) {
+                getContent(res.headers.location).then(resolve).catch(reject);
             }
-            cb(dockerfile);
+            if (response.statusCode < 200 || response.statusCode > 299) {
+                reject(new Error('Failed to load page, status code: ' + response.statusCode));
+            }
+            var body = [];
+            response.on('data', function (chunk) { body.push(chunk); });
+            response.on('end', function () { resolve(body.join('')); });
         });
-    });
-}
+        request.on('error', reject);
+    })
+};
 
 function printResults(results) {
     var errors = results.error;
@@ -90,4 +89,4 @@ function printJsonResults(results) {
 
 module.exports.printResults = printResults;
 module.exports.printJsonResults = printJsonResults;
-module.exports.downloadDockerfile = downloadDockerfile;
+module.exports.getContent = getContent;

@@ -131,7 +131,7 @@ sudo npm install -g dockerfile_lint
 ```
 Run the tool:
 ```
-dockerfile_lint  -f /path/to/dockerfile  [-r /path/to/rule/file]
+dockerfile_lint  -f /path/to/dockerfile  [-f /path/to/second/dockerfile]  [-r /path/to/rule/file]
 ```
 A default rule file is used if no rule file is given.
 
