@@ -1,7 +1,7 @@
 'use strict';
 process.env.NODE_ENV = 'test';
 
-require('should');
+var should = require('should');
 
 var exec = require('child_process').exec,
     path = require('path')
@@ -56,7 +56,6 @@ it('should exit with code 0 on warning when in permissive mode (long form)', fun
 
 });
 
-
 it('should exit with code 1 on warning when not in permissive mode ', function (done) {
     var p = exec('node ' + binScript + ' -f test/data/dockerfiles/TestLabels -r test/data/rules/basic.yaml',
         function (err, stdout, stderr) {
@@ -68,6 +67,15 @@ it('should exit with code 1 on warning when not in permissive mode ', function (
 });
 
 
-
+it('should output valid JSON when in --json mode with multiple Dockerfiles', function (done) {
+    var p = exec('node ' + binScript + ' --json -f test/data/dockerfiles/TestLabels -f test/data/dockerfiles/TestLabels -p -r test/data/rules/basic.yaml',
+        function (err, stdout, stderr) {
+            should(JSON.parse(stdout)).be.ok.and.have.lengthOf(2);
+        });
+    p.on('exit', function (code) {
+        code.should.eql(0);
+        done();
+    });
+});
 
 
