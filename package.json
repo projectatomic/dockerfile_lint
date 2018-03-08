@@ -1,6 +1,6 @@
 {
   "name": "dockerfile_lint",
-  "version": "0.2.8",
+  "version": "0.3.0",
   "description": "Utility for linting a docker file against accepted good practices",
   "main": "index.js",
   "bin": {
