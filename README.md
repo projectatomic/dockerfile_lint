@@ -27,7 +27,7 @@ The linter can also be used to check LABEL rules against docker images.
             
             
                    
-By default, the linter runs in strict mode (errors and/or warnings result in non-zero return code). Run the command with '-p'  or '--permissive to
+By default, the linter runs in strict mode (errors and/or warnings result in non-zero return code). Run the command with `-p`  or `--permissive` to
 run in permissive mode:
 
             atomic run projectatomic/dockerfile-lint -p
@@ -67,7 +67,7 @@ Here is an example of a line rule expressed in yaml:
 ```
 
 ## Line Rule Section
-This section contains rules that must be run on a given instruction in the dockerfile. There is a rule to check the syntax of each instruction and zero or more rules for semantic checks. The example below shows rules to run against the 'FROM' instruction:
+This section contains rules that must be run on a given instruction in the dockerfile. There is a rule to check the syntax of each instruction and zero or more rules for semantic checks. The example below shows rules to run against the `FROM` instruction:
 ```yaml
 line_rules: 
     FROM: 
@@ -101,7 +101,7 @@ line_rules:
           description: "Base Image must be from Red Hat"
           reference_url: 
 ```
-Note the (optional) 'inverse_rule' attribute - this is just a convinient way to negate a regex rule - by default a rule is considered violated if it matches the regex pattern, but when 'inverse_rule' is set to 'true' the rule is violated if the line does not match the regex.
+Note the (optional) `inverse_rule` attribute - this is just a convinient way to negate a regex rule - by default a rule is considered violated if it matches the regex pattern, but when 'inverse_rule' is set to 'true' the rule is violated if the line does not match the regex.
 
 ## Required Instruction Section
 This section includes a list of instructions that must exist in the dockerfile in order for it to be considered valid.
@@ -127,8 +127,8 @@ var result = validator.validate(dockerfile);
 You can install the linter globally on your pc:
 ```
 sudo npm install -g dockerfile_lint
-
 ```
+
 Run the tool:
 ```
 dockerfile_lint  -f /path/to/dockerfile  [-f /path/to/second/dockerfile]  [-r /path/to/rule/file]
@@ -143,7 +143,7 @@ chmod 555 dockerfile_lint
 dockerfile_lint  -f /path/to/dockerfile  [ -r /path/to/rule/file]
 ```
 
-To display results as JSON use the '-j' option:
+To display results as JSON use the `-j` option:
 ```
 dockerfile_lint  -j -f /path/to/dockerfile  [ -r /path/to/rule/file]
 ```
