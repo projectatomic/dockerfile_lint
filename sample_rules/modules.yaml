@@ -193,7 +193,16 @@
       rules: []
     MAINTAINER:
       paramSyntaxRegex: /.+/
-      rules: []
+      rules:
+        -
+          label: "maintainer_deprecated"
+          regex: /.+/
+          level: "info"
+          message: "the MAINTAINER command is deprecated"
+          description: "MAINTAINER is deprecated in favor of using LABEL since Docker v1.13.0"
+          reference_url:
+            - "https://github.com/docker/cli/blob/master/docs/deprecated.md"
+            - "#maintainer-in-dockerfile"
   required_instructions: 
     -
       instruction: "EXPOSE"
@@ -231,9 +240,3 @@
       reference_url:
         - "http://docs.projectatomic.io/container-best-practices/#"
         - "_recommended_labels_for_your_project"
-
-#             message: "MAINTAINER is deprecated, use LABEL instead"
-#             level: "info"
-#             required: true
-#             reference_url: 
-#               - "https://docs.docker.com/engine/reference/builder/#maintainer-deprecated"

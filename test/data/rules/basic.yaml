@@ -26,7 +26,16 @@
             - "#from"
     MAINTAINER:
       paramSyntaxRegex: /.+/
-      rules: []
+      rules:
+        -
+          label: "maintainer_deprecated"
+          regex: /.+/
+          level: "info"
+          message: "the MAINTAINER command is deprecated"
+          description: "MAINTAINER is deprecated in favor of using LABEL since Docker v1.13.0"
+          reference_url:
+            - "https://github.com/docker/cli/blob/master/docs/deprecated.md"
+            - "#maintainer-in-dockerfile"
     RUN:
       paramSyntaxRegex: /.+/
       rules:

@@ -71,12 +71,24 @@ if (commandline.dockerfile.length === 0 && !lintImage) {
 
 function lintDockerFiles() {
     var lintPromises = _.map(commandline.dockerfile, function (dockerfileLocation) {
-        console.log('\n# Analyzing ' + dockerfileLocation + '\n');
+        if (!commandline.json) {
+            console.info('\n# Analyzing ' + dockerfileLocation + '\n');
+        }
         return lintDockerFile(dockerfileLocation);
     });
-    Promise.all(lintPromises).then(function (errorCodes) {
-        var errorCodesSum = errorCodes.reduce(function(a, b) { return a + b; }, 0);
+    Promise.all(lintPromises).then(function (results) {
+        if (commandline.json) {
+            printJsonResults(results.length === 1 ? results[0] : results);
+        } else {
+            results.forEach(printResults);
+        }
+        var errorCodesSum = results.reduce(function(total, result) {
+            return total + result.error.count + strictMode ? result.warn.count : 0;
+        }, 0);
         process.exit(errorCodesSum);
+    }).catch(function (error) {
+        console.error(error);
+        process.exit(-1);
     });
 }
 
@@ -88,26 +100,14 @@ function lintDockerFile(dockerfileLocation) {
             if (/^http[s]?:\/\//.test(dockerfileLocation)) {
                 remoteFile = true;
             } else {
-                console.error('ERROR: Dockerfile not found -> ' + dockerfileLocation);
-                resolve(1);
-                return;
+                throw new Error('Dockerfile ' + dockerfileLocation + ' not found');
             }
         }
 
         function lint(dockerfileContent, rulefileLocation) {
             var validator = new DockeFileValidator(rulefileLocation);
-            var results = validator.validate(dockerfileContent);
-            if (commandline.json) {
-                printJsonResults(results);
-            } else {
-                printResults(results);
-            }
-
-            if ((results.error.count > 0) || (strictMode && results.warn.count > 0)) {
-                resolve(1);
-            } else {
-                resolve(0);
-            }
+            var result = validator.validate(dockerfileContent);
+            resolve(result);
         }
 
         if (remoteFile) {
