@@ -5,6 +5,21 @@
 A rule based 'linter' for [Dockerfiles](https://docs.docker.com/engine/reference/builder/). The linter rules can be used  to check file syntax as well as arbitrary semantic and best practice attributes determined by the rule file writer.
 The linter can also be used to check LABEL rules against docker images.
 
+# Table of Contents
+
+- [Quickstart](#quickstart)
+- [Extending and Customizing: Rule Files](#extending-and-customizing-rule-files)
+  - [Profile Section](#profile-section)
+  - [General Section](#general-section)
+  - [Rule Attributes](#rule-attributes)
+  - [Line Rule Section](#line-rule-section)
+  - [Required Instruction Section](#required-instruction-section)
+- [Library Usage](#library-usage)
+  - [Node.js application use](#nodejs-application-use)
+  - [Command Line use](#command-line-use)
+- [Credits](#credits)
+- [License](#license)
+
 # Quickstart
 1. Change to directory where you have a Dockerfile
 2. run
