@@ -83,7 +83,7 @@ function lintDockerFiles() {
             results.forEach(printResults);
         }
         var errorCodesSum = results.reduce(function(total, result) {
-            return total + result.error.count + strictMode ? result.warn.count : 0;
+            return total + result.error.count + (strictMode ? result.warn.count : 0);
         }, 0);
         process.exit(errorCodesSum);
     }).catch(function (error) {
