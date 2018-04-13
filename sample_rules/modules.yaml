@@ -78,7 +78,7 @@
                - "_recommended_labels_for_your_project"
 
     FROM: 
-      paramSyntaxRegex: /^[\w./-]+(:[\w.]+)?(-[\w.]+)?$/
+      paramSyntaxRegex: /^[\w./-]+(:[\w.]+)?(-[\w.]+)?( as \w+)?$/i
       rules: 
         - 
           # Matches 'FROM fedora:latest'

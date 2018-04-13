@@ -73,7 +73,7 @@
                - "http://docs.openshift.org/latest/creating_images/metadata.html#"
                - "defining-image-metadata" 
     FROM: 
-      paramSyntaxRegex: /^[\w./\-:]+(:[\w.]+)?(-[\w]+)?$/
+      paramSyntaxRegex: /^[\w./\-:]+(:[\w.]+)?(-[\w]+)?( as \w+)?$/i
       rules: 
         - 
           label: "is_latest_tag"

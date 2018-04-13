@@ -72,7 +72,7 @@
                - "http://docs.projectatomic.io/container-best-practices/#"
                - "_recommended_labels_for_your_project"
     FROM: 
-      paramSyntaxRegex: /^[\w./\-:]+(:[\w.]+)?(-[\w]+)?$/
+      paramSyntaxRegex: /^[\w./\-:]+(:[\w.]+)?(-[\w]+)?( as \w+)?$/i
       rules: 
         - 
           label: "is_latest_tag"
