@@ -134,7 +134,7 @@ Import and use the validator:
 var fs = require('fs');
 var rulefile = fs.readFileSync('/path/to/rulefile', 'utf8');
 var DockerFileValidator = require('dockerfile_lint');
-var validator = new DockeFileValidator(rulefile);
+var validator = new DockerFileValidator(rulefile);
 var result = validator.validate(dockerfile);
 ```
 
