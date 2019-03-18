@@ -56,7 +56,7 @@
           "regex": "/^[:]/",
           "level": "warn",
           "message": "From Profile B",
-          "description": "lorem ipsum tar",
+          "description": "No tag as been set, this may cause unpredictable builds. It is recommended that a specific tag is used in the FROM line or *-released which is the latest supported release.",
           "reference_url": [
             "https://docs.docker.com/engine/reference/builder/",
             "#from"
