@@ -16,7 +16,7 @@
        #
        defined_namevals:
            BZComponent:
-             valueRegex: /([\w.\/\\:-]+)/ 
+             valueRegex: /([\w.\/\\:-]+)/
              message: "Label 'BZComponent' is missing or has invalid format"
              level: "error"
              required: true
@@ -71,28 +71,28 @@
              reference_url:
                - "http://docs.projectatomic.io/container-best-practices/#"
                - "_recommended_labels_for_your_project"
-    FROM: 
+    FROM:
       paramSyntaxRegex: /^[\w./\-:]+(:[\w.]+)?(-[\w]+)?( as \w+)?$/i
-      rules: 
-        - 
+      rules:
+        -
           label: "is_latest_tag"
           regex: /latest/
           level: "error"
           message: "base image uses 'latest' tag"
           description: "using the 'latest' tag may cause unpredictable builds. It is recommended that a specific tag is used in the FROM line or *-released which is the latest supported release."
-          reference_url: 
+          reference_url:
             - "https://docs.docker.com/engine/reference/builder/"
             - "#from"
-        - 
+        -
           label: "no_tag"
-          regex: /^[:]/
+          regex: /(^[^:]+$)|(^[^:]+:\d+\/[^:]+$)/
           level: "warn"
           message: "No tag is used"
           description: "lorem ipsum tar"
-          reference_url: 
+          reference_url:
             - "https://docs.docker.com/engine/reference/builder/"
             - "#from"
-        - 
+        -
           label: "specified_registry"
           regex: /[\w]+?\.[\w-]+(\:|\.)([\w.]+|(\d+)?)([/?:].*)?/
           level: "info"
@@ -101,25 +101,25 @@
           reference_url:
             - "https://docs.docker.com/engine/reference/builder/"
             - "#entrypoint"
-    RUN: 
+    RUN:
       paramSyntaxRegex: /.+/
-      rules: 
-        - 
+      rules:
+        -
           label: "no_yum_clean_all"
           regex: /yum(?!.+clean all|.+\.repo|-config|\.conf)/g
           level: "warn"
           message: "yum clean all is not used"
           description: "the yum cache will remain in this layer making the layer unnecessarily large"
-          reference_url: 
+          reference_url:
             - "http://docs.projectatomic.io/container-best-practices/#"
             - "_clear_packaging_caches_and_temporary_package_downloads"
-        - 
+        -
           label: "yum_update_all"
           regex: /yum(.+update all|.+upgrade|.+update|\.config)/
           level: "info"
           message: "updating the entire base image may add unnecessary size to the container"
           description: "update the entire base image may add unnecessary size to the container"
-          reference_url: 
+          reference_url:
             - "http://docs.projectatomic.io/container-best-practices/#"
             - "_clear_packaging_caches_and_temporary_package_downloads"
         -
@@ -128,7 +128,7 @@
           level: "warn"
           message: "dnf clean all is not used"
           description: "the dnf cache will remain in this layer making the layer unnecessarily large"
-          reference_url: 
+          reference_url:
             - "http://docs.projectatomic.io/container-best-practices/#"
             - "_clear_packaging_caches_and_temporary_package_downloads"
         -
@@ -137,7 +137,7 @@
           level: "warn"
           message: "rvm cleanup is not used"
           description: "the rvm cache will remain in this layer making the layer unnecessarily large"
-          reference_url: 
+          reference_url:
             - "http://docs.projectatomic.io/container-best-practices/#"
             - "_clear_packaging_caches_and_temporary_package_downloads"
         -
@@ -146,25 +146,25 @@
           level: "warn"
           message: "gem cleanup all is not used"
           description: "the gem cache will remain in this layer making the layer unnecessarily large"
-          reference_url: 
+          reference_url:
             - "http://docs.projectatomic.io/container-best-practices/#"
-            - "_clear_packaging_caches_and_temporary_package_downloads" 
+            - "_clear_packaging_caches_and_temporary_package_downloads"
         -
           label: "no_apt-get_clean"
           regex: /apt-get install(?!.+clean)/g
           level: "warn"
           message: "apt-get clean is not used"
           description: "the apt-get cache will remain in this layer making the layer unnecessarily large"
-          reference_url: 
+          reference_url:
             - "http://docs.projectatomic.io/container-best-practices/#"
-            - "_clear_packaging_caches_and_temporary_package_downloads" 
+            - "_clear_packaging_caches_and_temporary_package_downloads"
         -
           label: "privileged_run_container"
           regex: /privileged/
           level: "warn"
           message: "a privileged run container is allowed access to host devices"
           description: "Does this run need to be privileged?"
-          reference_url: 
+          reference_url:
             - "http://docs.docker.com/engine/reference/run/#"
             - "runtime-privilege-and-linux-capabilities"
         -
@@ -173,8 +173,8 @@
           level: "warn"
           message: "installing SSH in a container is not recommended"
           description: "Do you really need SSH in this image?"
-          reference_url: "https://github.com/jpetazzo/nsenter"	
-        - 
+          reference_url: "https://github.com/jpetazzo/nsenter"
+        -
           label: "no_ampersand_usage"
           regex: / ; /
           level: "warn"
@@ -183,76 +183,76 @@
           reference_url:
             - "http://docs.projectatomic.io/container-best-practices/#"
             - "#_using_semi_colons_vs_double_ampersands"
-        - 
+        -
           label: "no_epel"
           regex: /epel/
           level: "warn"
           message: "Using epel is not recommended for the osbs profile."
           description: "Using epel RPMS is not recommended for the osbs profile."
-          reference_url: 
+          reference_url:
             - "http://docs.projectatomic.io/container-best-practices/#"
             - "_clear_packaging_caches_and_temporary_package_downloads"
-    EXPOSE: 
+    EXPOSE:
       paramSyntaxRegex: /^[\d-\s\w/\\]+$/
       rules: []
-    ENV: 
+    ENV:
       paramSyntaxRegex: /^[\w-$/\\=\"[\]{}@:,'`\t. ]+$/
       rules: []
-    ADD: 
+    ADD:
       paramSyntaxRegex: /^~?([\w-.~:/?#\[\]\\\/*@!$&'()*+,;=.{}"]+[\s]*)+$/
-    COPY: 
+    COPY:
       paramSyntaxRegex: /.+/
       rules: []
-    ENTRYPOINT: 
+    ENTRYPOINT:
       paramSyntaxRegex: /.+/
       rules: []
     VOLUME:
       paramSyntaxRegex: /.+/
       rules: []
-    USER: 
+    USER:
       paramSyntaxRegex: /^[a-z0-9_][a-z0-9_]{0,30}$/
       rules: []
-    WORKDIR: 
+    WORKDIR:
       paramSyntaxRegex: /^~?[\w\d-\/.{}$\/:]+[\s]*$/
       rules: []
-    ONBUILD: 
+    ONBUILD:
       paramSyntaxRegex: /.+/
       rules: []
-  required_instructions: 
-    - 
+  required_instructions:
+    -
       instruction: "EXPOSE"
       count: 1
       level: "info"
       message: "There is no 'EXPOSE' instruction"
       description: "Without exposed ports how will the service of the container be accessed?"
-      reference_url: 
+      reference_url:
         - "https://docs.docker.com/engine/reference/builder/"
         - "#expose"
-    - 
+    -
       instruction: "ENTRYPOINT"
       count: 1
       level: "info"
       message: "There is no 'ENTRYPOINT' instruction"
       description: "None"
-      reference_url: 
+      reference_url:
         - "https://docs.docker.com/engine/reference/builder/"
         - "#entrypoint"
-    - 
+    -
       instruction: "CMD"
       count: 1
       level: "info"
       message: "There is no 'CMD' instruction"
       description: "None"
-      reference_url: 
+      reference_url:
         - "https://docs.docker.com/engine/reference/builder/"
         - "#cmd"
-    - 
+    -
       instruction: "USER"
       count: 1
       level: "warn"
       message: "No 'USER' instruction"
       description: "The process(es) within the container may run as root and RUN instructions my be run as root"
-      reference_url: 
+      reference_url:
         - "https://docs.docker.com/engine/reference/builder/"
         - "#user"
     -

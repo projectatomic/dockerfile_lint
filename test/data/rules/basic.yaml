@@ -17,7 +17,7 @@
             - "#from"
         -
           label: "no_tag"
-          regex: /^[:]/
+          regex: /(^[^:]+$)|(^[^:]+:\d+\/[^:]+$)/
           level: "warn"
           message: "No tag is used"
           description: "lorem ipsum tar"
