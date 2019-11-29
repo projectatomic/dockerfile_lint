@@ -31,7 +31,7 @@ The linter can also be used to check LABEL rules against docker images.
 
   * Docker CLI
 
-            docker run -it --rm --privileged -v $PWD:/root/ \
+            docker run -it --rm -v $PWD:/root/ \
                    projectatomic/dockerfile-lint \
                    dockerfile_lint [-f Dockerfile]
 
