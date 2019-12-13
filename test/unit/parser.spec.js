@@ -50,6 +50,38 @@ describe('parse function', function () {
 
     });
 
+    it('should correctly ignore commands preceeded by an inline ignore', function () {
+        var options = {
+            includeComments: false
+        };
+        var contents = 'FROM ubuntu:latest\n'
+            + '#Comment1\n'
+            + '# dockerfile_lint - ignore\n'
+            + 'RUN echo done\n'
+            + "LABEL two=3 'one two'=4 three="
+            + '#Comment2\n'
+            + '#Comment3 \n';
+        var commands = parser.parse(contents, options);
+        commands.length.should.eql(2);
+
+    });
+
+    it('should not ignore commands preceeded by an comment about the inline ignore functionality', function () {
+        var options = {
+            includeComments: false
+        };
+        var contents = 'FROM ubuntu:latest\n'
+            + '#Comment1\n'
+            + '# dockerfile_lint comment about inline ignore\n'
+            + 'RUN echo done\n'
+            + "LABEL two=3 'one two'=4 three="
+            + '#Comment2\n'
+            + '#Comment3 \n';
+        var commands = parser.parse(contents, options);
+        commands.length.should.eql(3);
+
+    });
+
     it('should correctly report errors', function () {
         var options = {
             includeComments: false

@@ -121,6 +121,15 @@ Note the (optional) `inverse_rule` attribute - this is just a convinient way to 
 ## Required Instruction Section
 This section includes a list of instructions that must exist in the dockerfile in order for it to be considered valid.
 
+## Inline Ignore Instructions
+The user can tell dockerfile_lint to ignore a specific comand line inside a Dockerfile by placing a comment containing the word "dockerfile_lint" followed by the word "ignore", separated by a space, or a space and a dash/equals sign, above the command in the Dockerfile to be ignored. 
+```
+# Add is required <for some previously approved reason documented here>
+# dockerfile_lint - ignore
+ADD http://example.com/big.tar.xz /usr/src/things/
+```
+The above inline ignore would cause dockerfile_lint to skip processing the ADD command that follows it.  This allows the writing of strict rules in order to catch when best practices are not followed, while still being able to explicitly override the check on a case by case basis if a valid reason exists.  
+
 # Library Usage
 
 ## Node.js application use
