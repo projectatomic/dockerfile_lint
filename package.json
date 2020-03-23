@@ -28,7 +28,7 @@
     "commander": "~2.9.0",
     "dockerode": "^2.2.9",
     "js-yaml": "~3.13.1",
-    "lodash": "^2.4.2",
+    "lodash": "^4.17.13",
     "winston": "^2.1.1"
   },
   "devDependencies": {
