@@ -35,7 +35,7 @@ The linter can also be used to check LABEL rules against docker images.
                    projectatomic/dockerfile-lint \
                    dockerfile_lint [-f Dockerfile]
 
-            docker run -it --rm --privileged -v $PWD:/root/  \
+            docker run -it --rm -v $PWD:/root/  \
                    -v /var/run/docker.sock:/var/run/docker.sock \
                    projectatomic/dockerfile-lint \
                    dockerfile_lint  image <imageid>
@@ -47,7 +47,7 @@ run in permissive mode:
 
             atomic run projectatomic/dockerfile-lint -p
 
-            docker run -it --rm --privileged -v $PWD:/root/ \
+            docker run -it --rm -v $PWD:/root/ \
                                projectatomic/dockerfile-lint \
                                dockerfile_lint -p -f Dockerfile
 
