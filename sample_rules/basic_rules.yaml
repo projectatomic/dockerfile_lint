@@ -163,15 +163,6 @@
             - "http://docs.projectatomic.io/container-best-practices/#"
             - "_clear_packaging_caches_and_temporary_package_downloads" 
         -
-          label: "no_apt-get_clean"
-          regex: /apt-get install(?!.+clean)/g
-          level: "warn"
-          message: "apt-get clean is not used"
-          description: "the apt-get cache will remain in this layer making the layer unnecessarily large"
-          reference_url: 
-            - "http://docs.projectatomic.io/container-best-practices/#"
-            - "_clear_packaging_caches_and_temporary_package_downloads" 
-        -
           label: "privileged_run_container"
           regex: /privileged/
           level: "warn"
