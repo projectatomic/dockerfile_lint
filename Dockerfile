@@ -8,7 +8,7 @@ RUN yum install -y --setopt=tsflags=nodocs npm && \
     yum clean all
 
 WORKDIR /opt/dockerfile_lint
-ADD . .
+COPY . .
 RUN npm install && \
     ln -s /opt/dockerfile_lint/bin/dockerfile_lint /usr/bin/dockerfile_lint
 
