@@ -21,4 +21,4 @@ RUN mkdir /sample_rules  && \
 WORKDIR /root/
 LABEL RUN docker run -it --rm --privileged -v `pwd`:/root/ -v /var/run/docker.sock:/var/run/docker.sock --name NAME -e NAME=NAME -e IMAGE=IMAGE IMAGE dockerfile_lint
 
-CMD /bin/bash
+CMD ["/bin/bash"]
