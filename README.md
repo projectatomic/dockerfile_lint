@@ -172,6 +172,11 @@ To display results as JSON use the `-j` option:
 dockerfile_lint  -j -f /path/to/dockerfile  [ -r /path/to/rule/file]
 ```
 
+To display results as JUnit XML file use the `-u` option:
+```
+dockerfile_lint  -u -f /path/to/dockerfile  [ -r /path/to/rule/file]
+```
+
 Command Help:
 ```
 dockerfile_lint  -h
