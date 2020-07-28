@@ -6,7 +6,7 @@ var should = require('should');
 var exec = require('child_process').exec,
     path = require('path')
 var binScript = path.join('bin', 'dockerfile_lint')
-
+var parser = require('fast-xml-parser');
 
 describe('The dockerfile_lint command', function () {
 
@@ -92,5 +92,28 @@ describe('The dockerfile_lint command', function () {
             done();
         });
     });
+
+    it('should exit with code 1 and error message when using both --json and --junit options ', function (done) {
+        var p = exec('node ' + binScript + ' --junit --json -f test/data/dockerfiles/TestLabels',
+            function (err, stdout, stderr) {
+                should(stderr).be.equal("ERROR: result format options (\"--json and --junit\") cannot be used together, please choose one only\n")
+            });
+        p.on('exit', function (code) {
+            code.should.eql(1);
+            done();
+        });
+    });
+
+    it('should output valid XML when in --junit mode', function (done) {
+        var p = exec('node ' + binScript + ' --junit -f test/data/dockerfiles/TestLabels -p -r test/data/rules/basic.yaml',
+            function (err, stdout, stderr) {
+                should(parser.validate(stdout)).be.ok;
+            });
+        p.on('exit', function (code) {
+            code.should.eql(0);
+            done();
+        });
+    });
+
 
 });

@@ -2,6 +2,7 @@
  * Created by lphiri on 3/29/16.
  */
 'use strict';
+var builder = require('junit-report-builder');
 var util = require('util');
 
 function getRefUrl(url) {
@@ -87,6 +88,48 @@ function printJsonResults(results) {
     console.log(json);
 }
 
+function makeJunitTestCase(suite, type, entry) {
+    var ref_url = getRefUrl(entry.reference_url);
+    var message = entry.message ? entry.message : " ";
+    var description = entry.description ? entry.description + " | " : "";
+    description = description + "Reference -> " + ref_url;
+
+    suite.testCase()
+        .className(type)
+        .name(message)
+        .failure(description);
+}
+
+function printJunitResults(results) {
+    // Create a test suite
+    var suite = builder.testSuite().name('dockerfile_lint');
+
+    // Get test results
+    var errors = results.error;
+    var warn = results.warn;
+    var info = results.info;
+
+    // Convert test results to JUnit test cases
+    if (errors && errors.data && errors.data.length > 0) {
+        errors.data.forEach(function (entry) {
+            makeJunitTestCase(suite, "ERROR", entry);
+        });
+    }
+    if (warn && warn.data && warn.data.length > 0) {
+        warn.data.forEach(function (entry) {
+            makeJunitTestCase(suite, "INFO", entry);
+        });
+    }
+    if (info && info.data && info.data.length > 0) {
+        info.data.forEach(function (entry) {
+            makeJunitTestCase(suite, "WARNING", entry);
+        });
+    }
+
+    console.log(builder.build());
+}
+
 module.exports.printResults = printResults;
 module.exports.printJsonResults = printJsonResults;
+module.exports.printJunitResults = printJunitResults;
 module.exports.getContent = getContent;
