@@ -89,10 +89,15 @@ function printJsonResults(results) {
 }
 
 function makeJunitTestCase(suite, type, entry) {
-    var ref_url = getRefUrl(entry.reference_url);
+    var lineContent = "";
+    if (entry.lineContent) {
+        var line = entry.line ? ("Line " + entry.line + ":") : "Line 0:";
+        lineContent = line + " -> " + entry.lineContent + ". ";
+    }
     var message = entry.message ? entry.message : " ";
+    var ref_url = getRefUrl(entry.reference_url);
     var description = entry.description ? entry.description + " | " : "";
-    description = description + "Reference -> " + ref_url;
+    description = lineContent + message + ". " + description + "Reference -> " + ref_url;
 
     suite.testCase()
         .className(type)
