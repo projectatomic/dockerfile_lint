@@ -13,6 +13,7 @@ var fs = require('fs'),
     ImageLinter = require('../lib/image-linter'),
     printResults = require('./functions').printResults,
     printJsonResults = require('./functions').printJsonResults,
+    printJunitResults = require('./functions').printJunitResults,
     getContent = require('./functions').getContent,
     rulefileLocation = null,
     rulefile = null,
@@ -26,7 +27,9 @@ function collectArgs(arg, args) {
   return args;
 }
 
-commandline.option('-j, --json', 'Show results in JSON format')
+commandline
+    .option('-j, --json', 'Show results in JSON format')
+    .option('-u, --junit', 'Show results in JUnit XML format')
     .option('-r, --rulefile [rulefile] (optional)', 'Rule file', rulefile)
     .option('-f, --dockerfile [dockerfile] (optional)', 'File to lint. Accepts a local file or an http(s) URL. If not present attempts to lint dockerfile in current directory', collectArgs, [])
     .option('-p, --permissive', 'Run in permissive mode (return 1 only on error but not on warning)')
@@ -54,6 +57,12 @@ if (rulefileLocation !== null) {
     }
 }
 
+// Make sure both JSON and JUnit output options aren't set since they are mutually exclusive
+if (commandline.json && commandline.junit) {
+    console.error('ERROR: result format options ("--json and --junit") cannot be used together, please choose one only');
+    process.exit(1);
+}
+
 if (commandline.permissive) {
     strictMode = false;
 }
@@ -71,7 +80,7 @@ if (commandline.dockerfile.length === 0 && !lintImage) {
 
 function lintDockerFiles() {
     var lintPromises = _.map(commandline.dockerfile, function (dockerfileLocation) {
-        if (!commandline.json) {
+        if (!commandline.json && !commandline.junit) {
             console.info('\n# Analyzing ' + dockerfileLocation + '\n');
         }
         return lintDockerFile(dockerfileLocation);
@@ -79,6 +88,8 @@ function lintDockerFiles() {
     Promise.all(lintPromises).then(function (results) {
         if (commandline.json) {
             printJsonResults(results.length === 1 ? results[0] : results);
+        } else if (commandline.junit) {
+            printJunitResults(results.length === 1 ? results[0] : results);
         } else {
             results.forEach(printResults);
         }
@@ -130,6 +141,8 @@ function lintImageFromInspect() {
         var results = linter.validate(inspectOutPut);
         if (commandline.json) {
             printJsonResults(results);
+        } else if (commandline.junit) {
+            printJunitResults(results);
         } else {
             printResults(results);
         }
