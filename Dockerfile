@@ -8,7 +8,7 @@ RUN yum install -y --setopt=tsflags=nodocs npm && \
     yum clean all
 
 WORKDIR /opt/dockerfile_lint
-ADD . .
+COPY . .
 RUN npm install && \
     ln -s /opt/dockerfile_lint/bin/dockerfile_lint /usr/bin/dockerfile_lint
 
@@ -21,4 +21,4 @@ RUN mkdir /sample_rules  && \
 WORKDIR /root/
 LABEL RUN docker run -it --rm --privileged -v `pwd`:/root/ -v /var/run/docker.sock:/var/run/docker.sock --name NAME -e NAME=NAME -e IMAGE=IMAGE IMAGE dockerfile_lint
 
-CMD /bin/bash
+CMD ["/bin/bash"]
