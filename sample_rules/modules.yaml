@@ -131,7 +131,7 @@
             - "_clear_packaging_caches_and_temporary_package_downloads"
         - 
           label: "yum_update_all"
-          regex: /yum(.+update all|.+upgrade|.+update|\.config)/
+          regex: /yum([ \t]+update all|[ \t]+upgrade|[ \t]+update|\.config)/
           level: "info"
           message: "updating the entire base image may add unnecessary size to the container"
           description: "update the entire base image may add unnecessary size to the container"
