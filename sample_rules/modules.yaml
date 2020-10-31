@@ -77,30 +77,30 @@
                - "http://docs.projectatomic.io/container-best-practices/#"
                - "_recommended_labels_for_your_project"
 
-    FROM: 
+    FROM:
       paramSyntaxRegex: /^[\w./-]+(:[\w.]+)?(-[\w.]+)?( as \w+)?$/i
-      rules: 
-        - 
+      rules:
+        -
           # Matches 'FROM fedora:latest'
           label: "is_latest_tag"
           regex: /:latest/
           level: "error"
           message: "base image uses 'latest' tag"
           description: "using the 'latest' tag may cause unpredictable builds. It is recommended that a specific tag is used in the FROM line or *-released which is the latest supported release."
-          reference_url: 
+          reference_url:
             - "https://docs.docker.com/reference/builder/"
             - "#from"
-        - 
+        -
           # Matches 'FROM fedora:'
           label: "no_tag"
-          regex: /[.[^:]+$/
+          regex: /(^[^:]+$)|(^[^:]+:\d+\/[^:]+$)/
           level: "warn"
           message: "No tag is used"
           description: "specifying no tag may cause unpredictable builds. It is recommended that a specific tag is used in the FROM line or *-released which is the latest supported release."
-          reference_url: 
+          reference_url:
             - "https://docs.docker.com/reference/builder/"
             - "#from"
-        - 
+        -
           label: "specified_registry"
           regex: /[\w]+?\.[\w-]+(\:|\.)([\w.]+|(\d+)?)([/?:].*)?/
           level: "info"
@@ -117,25 +117,25 @@
           message: "Base Image is not from Fedora"
           description: "Base Image must be from Fedora"
           reference_url:
-    RUN: 
+    RUN:
       paramSyntaxRegex: /.+/
-      rules: 
-        - 
+      rules:
+        -
           label: "no_yum_clean_all"
           regex: /yum(?!.+clean all|.+\.repo|-config|\.conf)/g
           level: "warn"
           message: "yum clean all is not used"
           description: "the yum cache will remain in this layer making the layer unnecessarily large"
-          reference_url: 
+          reference_url:
             - "http://docs.projectatomic.io/container-best-practices/#"
             - "_clear_packaging_caches_and_temporary_package_downloads"
-        - 
+        -
           label: "yum_update_all"
           regex: /yum(.+update all|.+upgrade|.+update|\.config)/
           level: "info"
           message: "updating the entire base image may add unnecessary size to the container"
           description: "update the entire base image may add unnecessary size to the container"
-          reference_url: 
+          reference_url:
             - "http://docs.projectatomic.io/container-best-practices/#"
             - "_clear_packaging_caches_and_temporary_package_downloads"
         -
@@ -144,7 +144,7 @@
           level: "warn"
           message: "dnf clean all is not used"
           description: "the dnf cache will remain in this layer making the layer unnecessarily large"
-          reference_url: 
+          reference_url:
             - "http://docs.projectatomic.io/container-best-practices/#"
             - "_clear_packaging_caches_and_temporary_package_downloads"
         -
@@ -153,7 +153,7 @@
           level: "warn"
           message: "a privileged run container is allowed access to host devices"
           description: "Does this run need to be privileged?"
-          reference_url: 
+          reference_url:
             - "http://docs.docker.com/engine/reference/run/#"
             - "runtime-privilege-and-linux-capabilities"
         -
@@ -165,30 +165,30 @@
           reference_url:
             - "http://docs.projectatomic.io/container-best-practices/#"
             - "#_using_semi_colons_vs_double_ampersands"
-    EXPOSE: 
+    EXPOSE:
       paramSyntaxRegex: /^[\d-\s\w/\\]+$/
       rules: []
-    ENV: 
+    ENV:
       paramSyntaxRegex: /^[\w-$/\\=\"[\]{}@:,'`\t. ]+$/
       rules: []
-    ADD: 
+    ADD:
       paramSyntaxRegex: /^~?([\w-.~:/?#\[\]\\\/*@!$&'()*+,;=.{}"]+[\s]*)+$/
-    COPY: 
+    COPY:
       paramSyntaxRegex: /.+/
       rules: []
-    ENTRYPOINT: 
+    ENTRYPOINT:
       paramSyntaxRegex: /.+/
       rules: []
     VOLUME:
       paramSyntaxRegex: /.+/
       rules: []
-    USER: 
+    USER:
       paramSyntaxRegex: /^[a-z0-9_][a-z0-9_]{0,30}$/
       rules: []
-    WORKDIR: 
+    WORKDIR:
       paramSyntaxRegex: /^~?[\w\d-\/.{}$\/:]+[\s]*$/
       rules: []
-    ONBUILD: 
+    ONBUILD:
       paramSyntaxRegex: /.+/
       rules: []
     MAINTAINER:
@@ -203,32 +203,32 @@
           reference_url:
             - "https://github.com/docker/cli/blob/master/docs/deprecated.md"
             - "#maintainer-in-dockerfile"
-  required_instructions: 
+  required_instructions:
     -
       instruction: "EXPOSE"
       count: 1
       level: "info"
       message: "There is no 'EXPOSE' instruction"
       description: "Without exposed ports how will the service of the container be accessed?"
-      reference_url: 
+      reference_url:
         - "https://docs.docker.com/reference/builder/"
         - "#expose"
-    - 
+    -
       instruction: "CMD"
       count: 1
       level: "info"
       message: "There is no 'CMD' instruction"
       description: "None"
-      reference_url: 
+      reference_url:
         - "https://docs.docker.com/reference/builder/"
         - "#cmd"
-    - 
+    -
       instruction: "USER"
       count: 1
       level: "warn"
       message: "No 'USER' instruction"
       description: "The process(es) within the container may run as root and RUN instructions may be run as root"
-      reference_url: 
+      reference_url:
         - "https://docs.docker.com/reference/builder/"
         - "#user"
     -

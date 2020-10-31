@@ -53,7 +53,7 @@
         },
         {
           "label": "no_tag",
-          "regex": "/^[:]/",
+          "regex": "/(^[^:]+$)|(^[^:]+:\d+\/[^:]+$)/",
           "level": "warn",
           "message": "From Profile B",
           "description": "lorem ipsum tar",
