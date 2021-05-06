@@ -29,7 +29,7 @@
     "dockerode": "^2.2.9",
     "js-yaml": "~3.13.1",
     "junit-report-builder": "^2.1.0",
-    "lodash": "^2.4.2",
+    "lodash": "^4.17.21",
     "winston": "^2.4.5"
   },
   "devDependencies": {
