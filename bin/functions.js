@@ -122,12 +122,12 @@ function printJunitResults(results) {
     }
     if (warn && warn.data && warn.data.length > 0) {
         warn.data.forEach(function (entry) {
-            makeJunitTestCase(suite, "INFO", entry);
+            makeJunitTestCase(suite, "WARNING", entry);
         });
     }
     if (info && info.data && info.data.length > 0) {
         info.data.forEach(function (entry) {
-            makeJunitTestCase(suite, "WARNING", entry);
+            makeJunitTestCase(suite, "INFO", entry);
         });
     }
 
