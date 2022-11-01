@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "fast-xml-parser": "^3.17.4",
-    "mocha": "~2.0.1",
+    "mocha": "~10.1.0",
     "pre-commit": "^1.1.2",
     "should": "~4.1.0"
   }
